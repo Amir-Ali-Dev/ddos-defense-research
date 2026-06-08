@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="700" viewBox="0 0 1100 700" role="img" aria-labelledby="title desc">
+  <title id="title">Core defensive controls against DDoS pressure</title>
+  <desc id="desc">A defensive controls diagram showing rate limiting, caching, autoscaling, queues, graceful degradation, logging, metrics, and alerting around an application.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .app { fill: #ffffff; stroke: #0f172a; stroke-width: 2.5; rx: 14; }
+      .control { fill: #ecfeff; stroke: #0891b2; stroke-width: 2; rx: 12; }
+      .data { fill: #f5f3ff; stroke: #7c3aed; stroke-width: 2; rx: 12; }
+      .ops { fill: #f0fdf4; stroke: #16a34a; stroke-width: 2; rx: 12; }
+      .warn { fill: #fff7ed; stroke: #ea580c; stroke-width: 2; rx: 12; }
+      .title { font-family: Arial, sans-serif; fill: #0f172a; font-size: 24px; font-weight: 700; }
+      .label { font-family: Arial, sans-serif; fill: #0f172a; font-size: 16px; font-weight: 700; }
+      .small { font-family: Arial, sans-serif; fill: #475569; font-size: 13px; }
+      .arrow { stroke: #334155; stroke-width: 2.3; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect class="bg" width="1100" height="700"/>
+  <text x="60" y="58" class="title">DDoS Defensive Controls</text>
+  <text x="60" y="84" class="small">Controls work best when they reduce request cost and provide evidence for fast response.</text>
+
+  <rect x="435" y="285" width="230" height="110" class="app"/>
+  <text x="550" y="332" text-anchor="middle" class="label">Application Core</text>
+  <text x="550" y="360" text-anchor="middle" class="small">business routes and APIs</text>
+
+  <rect x="85" y="150" width="230" height="88" class="control"/>
+  <text x="200" y="185" text-anchor="middle" class="label">Rate Limiting</text>
+  <text x="200" y="210" text-anchor="middle" class="small">IP, user, API key, route cost</text>
+
+  <rect x="385" y="120" width="230" height="88" class="data"/>
+  <text x="500" y="155" text-anchor="middle" class="label">Cache</text>
+  <text x="500" y="180" text-anchor="middle" class="small">serve public data at edge</text>
+
+  <rect x="700" y="150" width="230" height="88" class="warn"/>
+  <text x="815" y="185" text-anchor="middle" class="label">Autoscaling</text>
+  <text x="815" y="210" text-anchor="middle" class="small">useful after filtering</text>
+
+  <rect x="85" y="455" width="230" height="88" class="data"/>
+  <text x="200" y="490" text-anchor="middle" class="label">Queue / Backpressure</text>
+  <text x="200" y="515" text-anchor="middle" class="small">smooth bursty workloads</text>
+
+  <rect x="385" y="500" width="230" height="88" class="warn"/>
+  <text x="500" y="535" text-anchor="middle" class="label">Graceful Degradation</text>
+  <text x="500" y="560" text-anchor="middle" class="small">preserve critical flows</text>
+
+  <rect x="700" y="455" width="230" height="88" class="ops"/>
+  <text x="815" y="490" text-anchor="middle" class="label">Logging + Metrics</text>
+  <text x="815" y="515" text-anchor="middle" class="small">baseline, alert, investigate</text>
+
+  <rect x="385" y="610" width="230" height="52" class="ops"/>
+  <text x="500" y="642" text-anchor="middle" class="label">Incident Runbook</text>
+
+  <path d="M315 194 C380 194 395 285 435 315" class="arrow"/>
+  <path d="M500 208 L520 285" class="arrow"/>
+  <path d="M815 238 C770 285 715 308 665 330" class="arrow"/>
+  <path d="M435 365 C360 405 290 440 315 499" class="arrow"/>
+  <path d="M550 395 L515 500" class="arrow"/>
+  <path d="M665 365 C730 405 790 430 815 455" class="arrow"/>
+  <path d="M815 543 C760 610 660 636 615 636" class="arrow"/>
+  <path d="M500 588 L500 610" class="arrow"/>
+</svg>

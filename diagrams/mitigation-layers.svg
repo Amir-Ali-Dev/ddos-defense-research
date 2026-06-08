@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="720" viewBox="0 0 1000 720" role="img" aria-labelledby="title desc">
+  <title id="title">DDoS mitigation layers</title>
+  <desc id="desc">Stacked mitigation layers from upstream providers to observability and incident response.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .layer { stroke: #334155; stroke-width: 2; rx: 12; }
+      .text { font-family: Arial, sans-serif; fill: #0f172a; font-size: 24px; font-weight: 700; }
+      .label { font-family: Arial, sans-serif; fill: #0f172a; font-size: 18px; font-weight: 700; }
+      .small { font-family: Arial, sans-serif; fill: #475569; font-size: 13px; }
+    </style>
+  </defs>
+  <rect class="bg" width="1000" height="720"/>
+  <text x="70" y="58" class="text">Layered DDoS Mitigation</text>
+  <text x="70" y="84" class="small">Each layer removes pressure before the next layer has to spend expensive resources.</text>
+
+  <rect x="120" y="120" width="760" height="64" class="layer" fill="#ecfeff"/>
+  <text x="150" y="158" class="label">1. ISP / Scrubbing Provider</text>
+  <text x="610" y="158" class="small">volumetric absorption</text>
+
+  <rect x="150" y="200" width="700" height="64" class="layer" fill="#e0f2fe"/>
+  <text x="180" y="238" class="label">2. DNS / Anycast</text>
+  <text x="610" y="238" class="small">resilient routing</text>
+
+  <rect x="180" y="280" width="640" height="64" class="layer" fill="#f0fdf4"/>
+  <text x="210" y="318" class="label">3. CDN Edge</text>
+  <text x="610" y="318" class="small">cache and TLS termination</text>
+
+  <rect x="210" y="360" width="580" height="64" class="layer" fill="#dcfce7"/>
+  <text x="240" y="398" class="label">4. WAF / Bot Management</text>
+  <text x="610" y="398" class="small">block, challenge, inspect</text>
+
+  <rect x="240" y="440" width="520" height="64" class="layer" fill="#fff7ed"/>
+  <text x="270" y="478" class="label">5. Rate Limiting</text>
+  <text x="610" y="478" class="small">control request cost</text>
+
+  <rect x="270" y="520" width="460" height="64" class="layer" fill="#ffedd5"/>
+  <text x="300" y="558" class="label">6. Application Backpressure</text>
+  <text x="610" y="558" class="small">autoscale and degrade safely</text>
+
+  <rect x="300" y="600" width="400" height="64" class="layer" fill="#f5f3ff"/>
+  <text x="330" y="638" class="label">7. Data Tier Protection</text>
+  <text x="610" y="638" class="small">queues, cache, pool limits</text>
+
+  <rect x="70" y="672" width="860" height="32" fill="#ffffff" stroke="#334155" stroke-width="2" rx="10"/>
+  <text x="500" y="694" text-anchor="middle" class="small">Logging, metrics, tracing, and incident response wrap every layer.</text>
+</svg>

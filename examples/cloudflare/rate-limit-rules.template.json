@@ -1,0 +1,28 @@
+{
+  "description": "Illustrative Cloudflare rate limiting ruleset template. Verify exact API fields against current Cloudflare Rulesets API documentation before use.",
+  "rules": [
+    {
+      "description": "Protect login endpoint",
+      "expression": "(http.request.uri.path eq \"/auth/login\" and http.request.method eq \"POST\")",
+      "characteristics": ["ip.src", "http.request.uri.path", "http.request.method"],
+      "period_seconds": 60,
+      "requests_per_period": 10,
+      "mitigation": {
+        "action": "managed_challenge",
+        "duration_seconds": 600
+      }
+    },
+    {
+      "description": "Protect report export endpoint",
+      "expression": "(http.request.uri.path starts_with \"/reports/export\")",
+      "characteristics": ["ip.src", "http.request.uri.path"],
+      "period_seconds": 60,
+      "requests_per_period": 3,
+      "mitigation": {
+        "action": "block_or_challenge",
+        "duration_seconds": 300
+      }
+    }
+  ]
+}
+
