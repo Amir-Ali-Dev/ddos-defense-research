@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="520" viewBox="0 0 1400 520" role="img" aria-labelledby="title desc">
+  <title id="title">DDoS Defense Research</title>
+  <desc id="desc">A polished wide banner for a defensive DDoS research repository.</desc>
+  <defs>
+    <style>
+      .bg{fill:#07111f}.grid{stroke:#142b44;stroke-width:1}.panel{fill:#0b1628;stroke:#1e3a5f;stroke-width:2;rx:26}.title{font-family:"Segoe UI",Inter,system-ui,Arial,sans-serif;font-size:60px;font-weight:850;fill:#f8fafc;letter-spacing:0}.sub{font-family:"Segoe UI",Inter,system-ui,Arial,sans-serif;font-size:22px;fill:#cbd5e1}.eyebrow{font-family:"Segoe UI",Inter,system-ui,Arial,sans-serif;font-size:15px;font-weight:800;fill:#67e8f9;text-transform:uppercase;letter-spacing:1.6px}.pill{fill:#0f766e}.pill2{fill:#1d4ed8}.pill3{fill:#7c3aed}.ptext{font-family:"Segoe UI",Inter,system-ui,Arial,sans-serif;font-size:17px;font-weight:750;fill:#fff}.node{fill:#10233f;stroke:#38bdf8;stroke-width:3;rx:18}.safe{fill:#0f2f2a;stroke:#34d399}.warn{fill:#2d1f0d;stroke:#f59e0b}.line{stroke:#94a3b8;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}.small{font-family:"Segoe UI",Inter,system-ui,Arial,sans-serif;font-size:16px;font-weight:750;fill:#e2e8f0}.note{font-family:"Segoe UI",Inter,system-ui,Arial,sans-serif;font-size:14px;fill:#94a3b8}
+    </style>
+  </defs>
+  <rect class="bg" width="1400" height="520"/>
+  <path class="grid" d="M0 80H1400M0 160H1400M0 240H1400M0 320H1400M0 400H1400M0 480H1400M140 0V520M280 0V520M420 0V520M560 0V520M700 0V520M840 0V520M980 0V520M1120 0V520M1260 0V520"/>
+  <rect x="52" y="58" width="624" height="352" class="panel"/>
+  <text x="86" y="116" class="eyebrow">Defensive Security Reference</text>
+  <text x="82" y="188" class="title">DDoS Defense</text>
+  <text x="82" y="252" class="title">Research</text>
+  <text x="86" y="300" class="sub">Detection, mitigation, and resilient web architecture</text>
+  <rect x="86" y="336" width="150" height="42" rx="21" class="pill"/><text x="161" y="363" text-anchor="middle" class="ptext">Defensive</text>
+  <rect x="254" y="336" width="140" height="42" rx="21" class="pill2"/><text x="324" y="363" text-anchor="middle" class="ptext">Practical</text>
+  <rect x="412" y="336" width="164" height="42" rx="21" class="pill3"/><text x="494" y="363" text-anchor="middle" class="ptext">Architecture</text>
+
+  <rect x="740" y="58" width="604" height="352" class="panel"/>
+  <text x="776" y="116" class="eyebrow">Resilient Traffic Path</text>
+  <rect x="776" y="150" width="130" height="70" class="node"/><text x="841" y="193" text-anchor="middle" class="small">CDN</text>
+  <rect x="956" y="150" width="130" height="70" class="node safe"/><text x="1021" y="193" text-anchor="middle" class="small">WAF</text>
+  <rect x="1136" y="150" width="146" height="70" class="node safe"/><text x="1209" y="193" text-anchor="middle" class="small">Rate Limit</text>
+  <rect x="864" y="286" width="130" height="70" class="node warn"/><text x="929" y="329" text-anchor="middle" class="small">Cache</text>
+  <rect x="1044" y="286" width="130" height="70" class="node warn"/><text x="1109" y="329" text-anchor="middle" class="small">App</text>
+  <path class="line" d="M906 185H956M1086 185H1136M1209 220C1209 260 1110 248 1109 286M1021 220C1021 260 930 248 929 286M994 321H1044"/>
+  <text x="776" y="382" class="note">Filter early. Cache safely. Protect the origin.</text>
+</svg>
