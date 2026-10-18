@@ -36,6 +36,9 @@ fig.suptitle("Bounded functional comparison — 3 independent repetitions")
 fig.text(.5, .015, "Dots show individual trials. p95 of n=4 equals the maximum. Not a throughput or DDoS-capacity benchmark.", ha="center", fontsize=9)
 fig.tight_layout(rect=(0, .05, 1, .93))
 fig.savefig(directory / "comparison.svg")
+# Matplotlib emits trailing whitespace in SVG path attributes; normalize formatting only.
+svg = directory / "comparison.svg"
+svg.write_text("\n".join(line.rstrip() for line in svg.read_text(encoding="utf-8").splitlines()) + "\n", encoding="utf-8")
 fig.savefig(directory / "comparison.png", dpi=140)
 plt.close(fig)
 print("Generated comparison.svg and comparison.png from run", raw["runId"])

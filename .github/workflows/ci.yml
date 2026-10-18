@@ -24,6 +24,10 @@ jobs:
       - run: npm run build
       - run: npm test
       - run: npm run check
+      - name: Re-derive archived summary and CSV from recorded raw requests
+        run: |
+          node experiments/summarize.cjs experiments/results/ci-39169760646
+          git diff --exit-code -- experiments/results/ci-39169760646/summary.json experiments/results/ci-39169760646/requests.csv
       - run: npm audit --audit-level=high
       - name: Validate Compose and standalone Nginx configuration
         run: |
