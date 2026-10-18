@@ -1,0 +1,3027 @@
+{
+  "schema": 1,
+  "runId": "0b4c1467-28ce-4586-8394-2ce4612727f1",
+  "environment": {
+    "platform": "linux",
+    "arch": "x64",
+    "node": "v24.22.0",
+    "osRelease": "6.17.0-1022-azure",
+    "cpu": "Intel(R) Xeon(R) 6973P-C",
+    "logicalCpus": 4,
+    "totalMemoryBytes": 16765378560,
+    "githubRun": "39169760646",
+    "githubAttempt": "1",
+    "sourceCommit": "40cc0babe4b578bb9e7600b7d428345830687500",
+    "prHead": "a6a22c71991c57ae0f02d9bab13c243558550bd4",
+    "docker": {
+      "Platform": {
+        "Name": "Docker Engine - Community"
+      },
+      "Components": [
+        {
+          "Name": "Engine",
+          "Version": "28.0.4",
+          "Details": {
+            "ApiVersion": "1.48",
+            "Arch": "amd64",
+            "BuildTime": "Tue Mar 25 15:07:16 2025",
+            "Experimental": "false",
+            "GitCommit": "6430e49",
+            "GoVersion": "go1.23.7",
+            "KernelVersion": "6.17.0-1022-azure",
+            "MinAPIVersion": "1.24",
+            "Os": "linux"
+          }
+        },
+        {
+          "Name": "containerd",
+          "Version": "v2.4.1",
+          "Details": {
+            "GitCommit": "f2551031d7276a770f65f98c9b52e57e7dad07e8"
+          }
+        },
+        {
+          "Name": "runc",
+          "Version": "1.5.2",
+          "Details": {
+            "GitCommit": "v1.5.2-0-g29dd3dc2"
+          }
+        },
+        {
+          "Name": "docker-init",
+          "Version": "0.19.0",
+          "Details": {
+            "GitCommit": "de40ad0"
+          }
+        }
+      ],
+      "Version": "28.0.4",
+      "ApiVersion": "1.48",
+      "MinAPIVersion": "1.24",
+      "GitCommit": "6430e49",
+      "GoVersion": "go1.23.7",
+      "Os": "linux",
+      "Arch": "amd64",
+      "KernelVersion": "6.17.0-1022-azure",
+      "BuildTime": "2025-03-25T15:07:16.000000000+00:00"
+    },
+    "redis": "Redis server v=8.2.10 sha=00000000:1 malloc=jemalloc-5.3.0 bits=64 build=28e556e9aa061c75",
+    "images": [
+      {
+        "ID": "sha256:b842533ff06352670de854fcbd6939f01dd0f1a0fe4fd40d8e60a943626ee58b",
+        "ContainerName": "ddos-defense-lab-backend-1",
+        "Repository": "node",
+        "Tag": "24.22.0-alpine",
+        "Platform": "linux/amd64",
+        "Size": 171926337,
+        "LastTagTime": "0001-01-01T00:00:00Z"
+      },
+      {
+        "ID": "sha256:0d831f5435ede3eeaba5768270c9e6f542d58306f69bb61f148e5c2374b57c56",
+        "ContainerName": "ddos-defense-lab-edge-1",
+        "Repository": "nginx",
+        "Tag": "1.30.6-alpine",
+        "Platform": "linux/amd64",
+        "Size": 68375927,
+        "LastTagTime": "0001-01-01T00:00:00Z"
+      },
+      {
+        "ID": "sha256:d7fa9339e83433d26035e1d5960aa6b702c3b0671b47871816a50b2abaa98e33",
+        "ContainerName": "ddos-defense-lab-redis-app-a-1",
+        "Repository": "ddos-defense-lab-redis-app-a",
+        "Tag": "latest",
+        "Platform": "linux/amd64",
+        "Size": 188649904,
+        "LastTagTime": "2026-10-18T21:53:15.266901911Z"
+      },
+      {
+        "ID": "sha256:d7fa9339e83433d26035e1d5960aa6b702c3b0671b47871816a50b2abaa98e33",
+        "ContainerName": "ddos-defense-lab-redis-app-b-1",
+        "Repository": "ddos-defense-lab-redis-app-b",
+        "Tag": "latest",
+        "Platform": "linux/amd64",
+        "Size": 188649904,
+        "LastTagTime": "2026-10-18T21:53:15.266901911Z"
+      },
+      {
+        "ID": "sha256:fdd7c467318565990fdbe9959d27f0977e295f799dffc36dd5814b03184adc1a",
+        "ContainerName": "ddos-defense-lab-redis-1",
+        "Repository": "redis",
+        "Tag": "8.2.10-alpine",
+        "Platform": "linux/amd64",
+        "Size": 71416911,
+        "LastTagTime": "0001-01-01T00:00:00Z"
+      },
+      {
+        "ID": "sha256:d7fa9339e83433d26035e1d5960aa6b702c3b0671b47871816a50b2abaa98e33",
+        "ContainerName": "ddos-defense-lab-nestjs-1",
+        "Repository": "ddos-defense-lab-nestjs",
+        "Tag": "latest",
+        "Platform": "linux/amd64",
+        "Size": 188649904,
+        "LastTagTime": "2026-10-18T21:53:15.266901911Z"
+      }
+    ],
+    "packages": {
+      "express": "5.3.0",
+      "redis": "6.3.0"
+    }
+  },
+  "config": {
+    "budget": 6,
+    "windowMs": 1200,
+    "repetitions": 3,
+    "maxRequests": 2400,
+    "concurrency": 1,
+    "requestTimeoutMs": 1000,
+    "softDeadlineMs": 150000,
+    "hardDeadlineMs": 180000,
+    "redisUrl": "redis://127.0.0.1:16379",
+    "slots": {
+      "none": {
+        "port": 3410,
+        "group": "none",
+        "storage": "none"
+      },
+      "memory": {
+        "port": 3411,
+        "group": "memory-one",
+        "storage": "memory"
+      },
+      "memory-a": {
+        "port": 3412,
+        "group": "memory-two",
+        "storage": "memory"
+      },
+      "memory-b": {
+        "port": 3413,
+        "group": "memory-two",
+        "storage": "memory"
+      },
+      "redis-a": {
+        "port": 3414,
+        "group": "redis-two",
+        "storage": "redis"
+      },
+      "redis-b": {
+        "port": 3415,
+        "group": "redis-two",
+        "storage": "redis"
+      },
+      "open-a": {
+        "port": 3416,
+        "group": "redis-open",
+        "storage": "redis",
+        "failurePolicy": "open"
+      },
+      "open-b": {
+        "port": 3417,
+        "group": "redis-open",
+        "storage": "redis",
+        "failurePolicy": "open"
+      }
+    },
+    "modes": {
+      "none": [
+        "none"
+      ],
+      "memory-one": [
+        "memory"
+      ],
+      "memory-two": [
+        "memory-a",
+        "memory-b"
+      ],
+      "redis-two": [
+        "redis-a",
+        "redis-b"
+      ]
+    }
+  },
+  "method": "p50/p95: nearest-rank ceil(p*n), sorted complete response-body elapsed times in each repetition/scenario/mode/phase; no interpolation. Cross-trial spread is min/median/max, not a confidence interval. Warm-up and readiness probes excluded. HTTP status mixtures are not capacity measurements.",
+  "trials": [
+    {
+      "repetition": 1,
+      "scenario": "normal",
+      "mode": "none",
+      "phase": "main",
+      "count": 4,
+      "statuses": {
+        "200": 4
+      },
+      "accepted": 4,
+      "rejected": 0,
+      "expectedAccepted": 4,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.7582840000000033,
+      "p95Ms": 0.9866520000000492,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "normal",
+      "mode": "memory-one",
+      "phase": "main",
+      "count": 4,
+      "statuses": {
+        "200": 4
+      },
+      "accepted": 4,
+      "rejected": 0,
+      "expectedAccepted": 4,
+      "acceptedOverLogicalBudget": 0.6666666666666666,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.91126300000019,
+      "p95Ms": 1.205253999999968,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "normal",
+      "mode": "memory-two",
+      "phase": "main",
+      "count": 4,
+      "statuses": {
+        "200": 4
+      },
+      "accepted": 4,
+      "rejected": 0,
+      "expectedAccepted": 4,
+      "acceptedOverLogicalBudget": 0.6666666666666666,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 1.1633479999998144,
+      "p95Ms": 1.2090189999998984,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "normal",
+      "mode": "redis-two",
+      "phase": "main",
+      "count": 4,
+      "statuses": {
+        "200": 4
+      },
+      "accepted": 4,
+      "rejected": 0,
+      "expectedAccepted": 4,
+      "acceptedOverLogicalBudget": 0.6666666666666666,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 1.3682220000000598,
+      "p95Ms": 1.5230159999998705,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "excess",
+      "mode": "none",
+      "phase": "main",
+      "count": 16,
+      "statuses": {
+        "200": 16
+      },
+      "accepted": 16,
+      "rejected": 0,
+      "expectedAccepted": 16,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.6281060000001162,
+      "p95Ms": 0.7233570000000782,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "excess",
+      "mode": "memory-one",
+      "phase": "main",
+      "count": 16,
+      "statuses": {
+        "200": 6,
+        "429": 10
+      },
+      "accepted": 6,
+      "rejected": 10,
+      "expectedAccepted": 6,
+      "acceptedOverLogicalBudget": 1,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.6471550000001116,
+      "p95Ms": 1.3659789999999248,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "excess",
+      "mode": "memory-two",
+      "phase": "main",
+      "count": 16,
+      "statuses": {
+        "200": 12,
+        "429": 4
+      },
+      "accepted": 12,
+      "rejected": 4,
+      "expectedAccepted": 12,
+      "acceptedOverLogicalBudget": 2,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 0.7556259999998929,
+      "p95Ms": 1.0813210000001163,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "excess",
+      "mode": "redis-two",
+      "phase": "main",
+      "count": 16,
+      "statuses": {
+        "200": 6,
+        "429": 10
+      },
+      "accepted": 6,
+      "rejected": 10,
+      "expectedAccepted": 6,
+      "acceptedOverLogicalBudget": 1,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 1.0954460000000381,
+      "p95Ms": 1.7646270000000186,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "nat",
+      "mode": "none",
+      "phase": "main",
+      "count": 8,
+      "statuses": {
+        "200": 8
+      },
+      "accepted": 8,
+      "rejected": 0,
+      "expectedAccepted": 8,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.5456319999998414,
+      "p95Ms": 1.371354999999994,
+      "regularUsers": 4,
+      "regularUsersLimited": 0
+    },
+    {
+      "repetition": 1,
+      "scenario": "nat",
+      "mode": "memory-one",
+      "phase": "main",
+      "count": 8,
+      "statuses": {
+        "200": 6,
+        "429": 2
+      },
+      "accepted": 6,
+      "rejected": 2,
+      "expectedAccepted": 6,
+      "acceptedOverLogicalBudget": 1,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.5482810000000882,
+      "p95Ms": 1.033474999999953,
+      "regularUsers": 4,
+      "regularUsersLimited": 2
+    },
+    {
+      "repetition": 1,
+      "scenario": "nat",
+      "mode": "memory-two",
+      "phase": "main",
+      "count": 8,
+      "statuses": {
+        "200": 8
+      },
+      "accepted": 8,
+      "rejected": 0,
+      "expectedAccepted": 8,
+      "acceptedOverLogicalBudget": 1.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 0.5889230000000225,
+      "p95Ms": 0.7487190000001647,
+      "regularUsers": 4,
+      "regularUsersLimited": 0
+    },
+    {
+      "repetition": 1,
+      "scenario": "nat",
+      "mode": "redis-two",
+      "phase": "main",
+      "count": 8,
+      "statuses": {
+        "200": 6,
+        "429": 2
+      },
+      "accepted": 6,
+      "rejected": 2,
+      "expectedAccepted": 6,
+      "acceptedOverLogicalBudget": 1,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.8776040000000194,
+      "p95Ms": 1.0473860000001878,
+      "regularUsers": 4,
+      "regularUsersLimited": 2
+    },
+    {
+      "repetition": 1,
+      "scenario": "boundary",
+      "mode": "none",
+      "phase": "anchor",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.5309599999998227,
+      "p95Ms": 0.5856519999999819,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "boundary",
+      "mode": "none",
+      "phase": "before",
+      "count": 10,
+      "statuses": {
+        "200": 10
+      },
+      "accepted": 10,
+      "rejected": 0,
+      "expectedAccepted": 10,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.7227100000000064,
+      "p95Ms": 1.915592999999717,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "boundary",
+      "mode": "none",
+      "phase": "after",
+      "count": 12,
+      "statuses": {
+        "200": 12
+      },
+      "accepted": 12,
+      "rejected": 0,
+      "expectedAccepted": 12,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.4302379999999175,
+      "p95Ms": 2.5082280000001447,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "boundary",
+      "mode": "memory-one",
+      "phase": "anchor",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.5910380000000259,
+      "p95Ms": 0.9160640000000058,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "boundary",
+      "mode": "memory-one",
+      "phase": "before",
+      "count": 10,
+      "statuses": {
+        "200": 4,
+        "429": 6
+      },
+      "accepted": 4,
+      "rejected": 6,
+      "expectedAccepted": 4,
+      "acceptedOverLogicalBudget": 0.6666666666666666,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.6741839999999684,
+      "p95Ms": 1.6819139999997788,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "boundary",
+      "mode": "memory-one",
+      "phase": "after",
+      "count": 12,
+      "statuses": {
+        "200": 6,
+        "429": 6
+      },
+      "accepted": 6,
+      "rejected": 6,
+      "expectedAccepted": 6,
+      "acceptedOverLogicalBudget": 1,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.6567740000000413,
+      "p95Ms": 1.4610619999998562,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "boundary",
+      "mode": "memory-two",
+      "phase": "anchor",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 0.9003069999998843,
+      "p95Ms": 0.9268189999997958,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "boundary",
+      "mode": "memory-two",
+      "phase": "before",
+      "count": 10,
+      "statuses": {
+        "200": 10
+      },
+      "accepted": 10,
+      "rejected": 0,
+      "expectedAccepted": 10,
+      "acceptedOverLogicalBudget": 1.6666666666666667,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 0.9764459999996689,
+      "p95Ms": 2.8969340000003285,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "boundary",
+      "mode": "memory-two",
+      "phase": "after",
+      "count": 12,
+      "statuses": {
+        "200": 12
+      },
+      "accepted": 12,
+      "rejected": 0,
+      "expectedAccepted": 12,
+      "acceptedOverLogicalBudget": 2,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 0.6499229999999443,
+      "p95Ms": 1.517695000000458,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "boundary",
+      "mode": "redis-two",
+      "phase": "anchor",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 1.6517290000001594,
+      "p95Ms": 2.003201999999874,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "boundary",
+      "mode": "redis-two",
+      "phase": "before",
+      "count": 10,
+      "statuses": {
+        "200": 4,
+        "429": 6
+      },
+      "accepted": 4,
+      "rejected": 6,
+      "expectedAccepted": 4,
+      "acceptedOverLogicalBudget": 0.6666666666666666,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.9238600000007864,
+      "p95Ms": 2.0888099999992846,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "boundary",
+      "mode": "redis-two",
+      "phase": "after",
+      "count": 12,
+      "statuses": {
+        "200": 6,
+        "429": 6
+      },
+      "accepted": 6,
+      "rejected": 6,
+      "expectedAccepted": 6,
+      "acceptedOverLogicalBudget": 1,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 1.0991070000000036,
+      "p95Ms": 2.1450919999997495,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "outage",
+      "mode": "none",
+      "phase": "down",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.9582309999996141,
+      "p95Ms": 1.3482100000001083,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "outage",
+      "mode": "memory-one",
+      "phase": "down",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.9023999999999432,
+      "p95Ms": 0.9982069999996384,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "outage",
+      "mode": "memory-two",
+      "phase": "down",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 1.0025530000002618,
+      "p95Ms": 1.102512000000388,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "outage",
+      "mode": "redis-two",
+      "phase": "down",
+      "count": 2,
+      "statuses": {
+        "503": 2
+      },
+      "accepted": 0,
+      "rejected": 0,
+      "expectedAccepted": 0,
+      "acceptedOverLogicalBudget": 0,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.7648339999996097,
+      "p95Ms": 0.8515939999997499,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "outage",
+      "mode": "redis-open",
+      "phase": "down",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 1.0110749999994368,
+      "p95Ms": 1.0270649999993111,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "outage",
+      "mode": "none",
+      "phase": "recovered",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.48823600000014267,
+      "p95Ms": 0.8123370000002978,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "outage",
+      "mode": "memory-one",
+      "phase": "recovered",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 1.2876539999997476,
+      "p95Ms": 1.3511769999995522,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "outage",
+      "mode": "memory-two",
+      "phase": "recovered",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 0.751683000000412,
+      "p95Ms": 0.9277979999997115,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "outage",
+      "mode": "redis-two",
+      "phase": "recovered",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 1.579157000000123,
+      "p95Ms": 1.8157120000005307,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 1,
+      "scenario": "outage",
+      "mode": "redis-open",
+      "phase": "recovered",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 1.9395859999995082,
+      "p95Ms": 1.946578999999474,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "normal",
+      "mode": "none",
+      "phase": "main",
+      "count": 4,
+      "statuses": {
+        "200": 4
+      },
+      "accepted": 4,
+      "rejected": 0,
+      "expectedAccepted": 4,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.6888219999982539,
+      "p95Ms": 0.8125220000001718,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "normal",
+      "mode": "memory-one",
+      "phase": "main",
+      "count": 4,
+      "statuses": {
+        "200": 4
+      },
+      "accepted": 4,
+      "rejected": 0,
+      "expectedAccepted": 4,
+      "acceptedOverLogicalBudget": 0.6666666666666666,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.6387940000004164,
+      "p95Ms": 0.8762560000013764,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "normal",
+      "mode": "memory-two",
+      "phase": "main",
+      "count": 4,
+      "statuses": {
+        "200": 4
+      },
+      "accepted": 4,
+      "rejected": 0,
+      "expectedAccepted": 4,
+      "acceptedOverLogicalBudget": 0.6666666666666666,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 0.8304410000000644,
+      "p95Ms": 0.9010610000004817,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "normal",
+      "mode": "redis-two",
+      "phase": "main",
+      "count": 4,
+      "statuses": {
+        "200": 4
+      },
+      "accepted": 4,
+      "rejected": 0,
+      "expectedAccepted": 4,
+      "acceptedOverLogicalBudget": 0.6666666666666666,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 1.3145410000015545,
+      "p95Ms": 1.4239760000000388,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "excess",
+      "mode": "none",
+      "phase": "main",
+      "count": 16,
+      "statuses": {
+        "200": 16
+      },
+      "accepted": 16,
+      "rejected": 0,
+      "expectedAccepted": 16,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.38990499999999884,
+      "p95Ms": 0.8357560000004014,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "excess",
+      "mode": "memory-one",
+      "phase": "main",
+      "count": 16,
+      "statuses": {
+        "200": 6,
+        "429": 10
+      },
+      "accepted": 6,
+      "rejected": 10,
+      "expectedAccepted": 6,
+      "acceptedOverLogicalBudget": 1,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.43479200000001583,
+      "p95Ms": 0.7789520000005723,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "excess",
+      "mode": "memory-two",
+      "phase": "main",
+      "count": 16,
+      "statuses": {
+        "200": 12,
+        "429": 4
+      },
+      "accepted": 12,
+      "rejected": 4,
+      "expectedAccepted": 12,
+      "acceptedOverLogicalBudget": 2,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 0.6638820000007399,
+      "p95Ms": 0.8809049999999843,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "excess",
+      "mode": "redis-two",
+      "phase": "main",
+      "count": 16,
+      "statuses": {
+        "200": 6,
+        "429": 10
+      },
+      "accepted": 6,
+      "rejected": 10,
+      "expectedAccepted": 6,
+      "acceptedOverLogicalBudget": 1,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 1.0398160000004282,
+      "p95Ms": 2.7004459999989194,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "nat",
+      "mode": "none",
+      "phase": "main",
+      "count": 8,
+      "statuses": {
+        "200": 8
+      },
+      "accepted": 8,
+      "rejected": 0,
+      "expectedAccepted": 8,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.4843460000010964,
+      "p95Ms": 0.5933270000004995,
+      "regularUsers": 4,
+      "regularUsersLimited": 0
+    },
+    {
+      "repetition": 2,
+      "scenario": "nat",
+      "mode": "memory-one",
+      "phase": "main",
+      "count": 8,
+      "statuses": {
+        "200": 6,
+        "429": 2
+      },
+      "accepted": 6,
+      "rejected": 2,
+      "expectedAccepted": 6,
+      "acceptedOverLogicalBudget": 1,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.4642729999995936,
+      "p95Ms": 0.6329459999997198,
+      "regularUsers": 4,
+      "regularUsersLimited": 2
+    },
+    {
+      "repetition": 2,
+      "scenario": "nat",
+      "mode": "memory-two",
+      "phase": "main",
+      "count": 8,
+      "statuses": {
+        "200": 8
+      },
+      "accepted": 8,
+      "rejected": 0,
+      "expectedAccepted": 8,
+      "acceptedOverLogicalBudget": 1.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 0.6529499999996915,
+      "p95Ms": 0.7662669999990612,
+      "regularUsers": 4,
+      "regularUsersLimited": 0
+    },
+    {
+      "repetition": 2,
+      "scenario": "nat",
+      "mode": "redis-two",
+      "phase": "main",
+      "count": 8,
+      "statuses": {
+        "200": 6,
+        "429": 2
+      },
+      "accepted": 6,
+      "rejected": 2,
+      "expectedAccepted": 6,
+      "acceptedOverLogicalBudget": 1,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 1.1058430000011867,
+      "p95Ms": 1.946513999999297,
+      "regularUsers": 4,
+      "regularUsersLimited": 2
+    },
+    {
+      "repetition": 2,
+      "scenario": "boundary",
+      "mode": "none",
+      "phase": "anchor",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.8810610000000452,
+      "p95Ms": 1.0318829999996524,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "boundary",
+      "mode": "none",
+      "phase": "before",
+      "count": 10,
+      "statuses": {
+        "200": 10
+      },
+      "accepted": 10,
+      "rejected": 0,
+      "expectedAccepted": 10,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.5124869999999646,
+      "p95Ms": 1.103307000001223,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "boundary",
+      "mode": "none",
+      "phase": "after",
+      "count": 12,
+      "statuses": {
+        "200": 12
+      },
+      "accepted": 12,
+      "rejected": 0,
+      "expectedAccepted": 12,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.5017799999986892,
+      "p95Ms": 1.4537140000011277,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "boundary",
+      "mode": "memory-one",
+      "phase": "anchor",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.530468999999357,
+      "p95Ms": 0.7783069999986765,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "boundary",
+      "mode": "memory-one",
+      "phase": "before",
+      "count": 10,
+      "statuses": {
+        "200": 4,
+        "429": 6
+      },
+      "accepted": 4,
+      "rejected": 6,
+      "expectedAccepted": 4,
+      "acceptedOverLogicalBudget": 0.6666666666666666,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.4648479999996198,
+      "p95Ms": 1.241492000001017,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "boundary",
+      "mode": "memory-one",
+      "phase": "after",
+      "count": 12,
+      "statuses": {
+        "200": 6,
+        "429": 6
+      },
+      "accepted": 6,
+      "rejected": 6,
+      "expectedAccepted": 6,
+      "acceptedOverLogicalBudget": 1,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.7064410000002681,
+      "p95Ms": 1.7780070000007981,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "boundary",
+      "mode": "memory-two",
+      "phase": "anchor",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 0.8510319999986677,
+      "p95Ms": 0.9249369999997725,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "boundary",
+      "mode": "memory-two",
+      "phase": "before",
+      "count": 10,
+      "statuses": {
+        "200": 10
+      },
+      "accepted": 10,
+      "rejected": 0,
+      "expectedAccepted": 10,
+      "acceptedOverLogicalBudget": 1.6666666666666667,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 0.7796450000005279,
+      "p95Ms": 3.6888180000005377,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "boundary",
+      "mode": "memory-two",
+      "phase": "after",
+      "count": 12,
+      "statuses": {
+        "200": 12
+      },
+      "accepted": 12,
+      "rejected": 0,
+      "expectedAccepted": 12,
+      "acceptedOverLogicalBudget": 2,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 0.5895719999989524,
+      "p95Ms": 1.5657850000006874,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "boundary",
+      "mode": "redis-two",
+      "phase": "anchor",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 1.7783159999999043,
+      "p95Ms": 2.0020819999990636,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "boundary",
+      "mode": "redis-two",
+      "phase": "before",
+      "count": 10,
+      "statuses": {
+        "200": 4,
+        "429": 6
+      },
+      "accepted": 4,
+      "rejected": 6,
+      "expectedAccepted": 4,
+      "acceptedOverLogicalBudget": 0.6666666666666666,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.8892020000002958,
+      "p95Ms": 1.908726999999999,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "boundary",
+      "mode": "redis-two",
+      "phase": "after",
+      "count": 12,
+      "statuses": {
+        "200": 6,
+        "429": 6
+      },
+      "accepted": 6,
+      "rejected": 6,
+      "expectedAccepted": 6,
+      "acceptedOverLogicalBudget": 1,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 1.0480509999997594,
+      "p95Ms": 2.006470000000263,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "outage",
+      "mode": "none",
+      "phase": "down",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.8683120000005147,
+      "p95Ms": 1.3209549999992305,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "outage",
+      "mode": "memory-one",
+      "phase": "down",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.8538160000007338,
+      "p95Ms": 0.9601019999990967,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "outage",
+      "mode": "memory-two",
+      "phase": "down",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 0.9375149999996211,
+      "p95Ms": 0.9411610000006476,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "outage",
+      "mode": "redis-two",
+      "phase": "down",
+      "count": 2,
+      "statuses": {
+        "503": 2
+      },
+      "accepted": 0,
+      "rejected": 0,
+      "expectedAccepted": 0,
+      "acceptedOverLogicalBudget": 0,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.7763029999987339,
+      "p95Ms": 0.9281549999996059,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "outage",
+      "mode": "redis-open",
+      "phase": "down",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.9109850000004371,
+      "p95Ms": 0.9220649999988382,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "outage",
+      "mode": "none",
+      "phase": "recovered",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.6119510000007722,
+      "p95Ms": 0.8206809999992402,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "outage",
+      "mode": "memory-one",
+      "phase": "recovered",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.6452150000004622,
+      "p95Ms": 0.7965870000007271,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "outage",
+      "mode": "memory-two",
+      "phase": "recovered",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 0.674643999998807,
+      "p95Ms": 0.763983000000735,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "outage",
+      "mode": "redis-two",
+      "phase": "recovered",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 1.2391999999999825,
+      "p95Ms": 1.8564430000005814,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 2,
+      "scenario": "outage",
+      "mode": "redis-open",
+      "phase": "recovered",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 1.5211579999995593,
+      "p95Ms": 1.5290590000004158,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "normal",
+      "mode": "none",
+      "phase": "main",
+      "count": 4,
+      "statuses": {
+        "200": 4
+      },
+      "accepted": 4,
+      "rejected": 0,
+      "expectedAccepted": 4,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.57658900000024,
+      "p95Ms": 0.687884999999369,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "normal",
+      "mode": "memory-one",
+      "phase": "main",
+      "count": 4,
+      "statuses": {
+        "200": 4
+      },
+      "accepted": 4,
+      "rejected": 0,
+      "expectedAccepted": 4,
+      "acceptedOverLogicalBudget": 0.6666666666666666,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.6906330000001617,
+      "p95Ms": 0.7843510000002425,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "normal",
+      "mode": "memory-two",
+      "phase": "main",
+      "count": 4,
+      "statuses": {
+        "200": 4
+      },
+      "accepted": 4,
+      "rejected": 0,
+      "expectedAccepted": 4,
+      "acceptedOverLogicalBudget": 0.6666666666666666,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 0.722395000000688,
+      "p95Ms": 0.8189509999992879,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "normal",
+      "mode": "redis-two",
+      "phase": "main",
+      "count": 4,
+      "statuses": {
+        "200": 4
+      },
+      "accepted": 4,
+      "rejected": 0,
+      "expectedAccepted": 4,
+      "acceptedOverLogicalBudget": 0.6666666666666666,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 1.204424999999901,
+      "p95Ms": 1.3003630000002886,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "excess",
+      "mode": "none",
+      "phase": "main",
+      "count": 16,
+      "statuses": {
+        "200": 16
+      },
+      "accepted": 16,
+      "rejected": 0,
+      "expectedAccepted": 16,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.3338739999999234,
+      "p95Ms": 0.5515340000001743,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "excess",
+      "mode": "memory-one",
+      "phase": "main",
+      "count": 16,
+      "statuses": {
+        "200": 6,
+        "429": 10
+      },
+      "accepted": 6,
+      "rejected": 10,
+      "expectedAccepted": 6,
+      "acceptedOverLogicalBudget": 1,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.29463100000066333,
+      "p95Ms": 0.585772000000361,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "excess",
+      "mode": "memory-two",
+      "phase": "main",
+      "count": 16,
+      "statuses": {
+        "200": 12,
+        "429": 4
+      },
+      "accepted": 12,
+      "rejected": 4,
+      "expectedAccepted": 12,
+      "acceptedOverLogicalBudget": 2,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 0.5364009999993868,
+      "p95Ms": 0.704689000000144,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "excess",
+      "mode": "redis-two",
+      "phase": "main",
+      "count": 16,
+      "statuses": {
+        "200": 6,
+        "429": 10
+      },
+      "accepted": 6,
+      "rejected": 10,
+      "expectedAccepted": 6,
+      "acceptedOverLogicalBudget": 1,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.9616939999996248,
+      "p95Ms": 1.167287000000215,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "nat",
+      "mode": "none",
+      "phase": "main",
+      "count": 8,
+      "statuses": {
+        "200": 8
+      },
+      "accepted": 8,
+      "rejected": 0,
+      "expectedAccepted": 8,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.34689200000138953,
+      "p95Ms": 0.5247540000000299,
+      "regularUsers": 4,
+      "regularUsersLimited": 0
+    },
+    {
+      "repetition": 3,
+      "scenario": "nat",
+      "mode": "memory-one",
+      "phase": "main",
+      "count": 8,
+      "statuses": {
+        "200": 6,
+        "429": 2
+      },
+      "accepted": 6,
+      "rejected": 2,
+      "expectedAccepted": 6,
+      "acceptedOverLogicalBudget": 1,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.34384099999988393,
+      "p95Ms": 0.5119859999995242,
+      "regularUsers": 4,
+      "regularUsersLimited": 2
+    },
+    {
+      "repetition": 3,
+      "scenario": "nat",
+      "mode": "memory-two",
+      "phase": "main",
+      "count": 8,
+      "statuses": {
+        "200": 8
+      },
+      "accepted": 8,
+      "rejected": 0,
+      "expectedAccepted": 8,
+      "acceptedOverLogicalBudget": 1.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 0.44777699999940523,
+      "p95Ms": 0.605982999999469,
+      "regularUsers": 4,
+      "regularUsersLimited": 0
+    },
+    {
+      "repetition": 3,
+      "scenario": "nat",
+      "mode": "redis-two",
+      "phase": "main",
+      "count": 8,
+      "statuses": {
+        "200": 6,
+        "429": 2
+      },
+      "accepted": 6,
+      "rejected": 2,
+      "expectedAccepted": 6,
+      "acceptedOverLogicalBudget": 1,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.8040670000009413,
+      "p95Ms": 0.8432670000001963,
+      "regularUsers": 4,
+      "regularUsersLimited": 2
+    },
+    {
+      "repetition": 3,
+      "scenario": "boundary",
+      "mode": "none",
+      "phase": "anchor",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.5093399999987014,
+      "p95Ms": 0.5243629999986297,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "boundary",
+      "mode": "none",
+      "phase": "before",
+      "count": 10,
+      "statuses": {
+        "200": 10
+      },
+      "accepted": 10,
+      "rejected": 0,
+      "expectedAccepted": 10,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.4802219999983208,
+      "p95Ms": 1.447440000003553,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "boundary",
+      "mode": "none",
+      "phase": "after",
+      "count": 12,
+      "statuses": {
+        "200": 12
+      },
+      "accepted": 12,
+      "rejected": 0,
+      "expectedAccepted": 12,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.42505899999741814,
+      "p95Ms": 1.216379000001325,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "boundary",
+      "mode": "memory-one",
+      "phase": "anchor",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.5394520000008924,
+      "p95Ms": 0.7032020000006014,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "boundary",
+      "mode": "memory-one",
+      "phase": "before",
+      "count": 10,
+      "statuses": {
+        "200": 4,
+        "429": 6
+      },
+      "accepted": 4,
+      "rejected": 6,
+      "expectedAccepted": 4,
+      "acceptedOverLogicalBudget": 0.6666666666666666,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.36231299999781186,
+      "p95Ms": 1.3491800000010699,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "boundary",
+      "mode": "memory-one",
+      "phase": "after",
+      "count": 12,
+      "statuses": {
+        "200": 6,
+        "429": 6
+      },
+      "accepted": 6,
+      "rejected": 6,
+      "expectedAccepted": 6,
+      "acceptedOverLogicalBudget": 1,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.7109259999997448,
+      "p95Ms": 1.4986879999996745,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "boundary",
+      "mode": "memory-two",
+      "phase": "anchor",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 1.0544449999979406,
+      "p95Ms": 1.164158999999927,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "boundary",
+      "mode": "memory-two",
+      "phase": "before",
+      "count": 10,
+      "statuses": {
+        "200": 10
+      },
+      "accepted": 10,
+      "rejected": 0,
+      "expectedAccepted": 10,
+      "acceptedOverLogicalBudget": 1.6666666666666667,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 0.4588239999975485,
+      "p95Ms": 1.3563799999974435,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "boundary",
+      "mode": "memory-two",
+      "phase": "after",
+      "count": 12,
+      "statuses": {
+        "200": 12
+      },
+      "accepted": 12,
+      "rejected": 0,
+      "expectedAccepted": 12,
+      "acceptedOverLogicalBudget": 2,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 0.4914360000002489,
+      "p95Ms": 1.810566000000108,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "boundary",
+      "mode": "redis-two",
+      "phase": "anchor",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 1.7110929999980726,
+      "p95Ms": 1.9294779999981984,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "boundary",
+      "mode": "redis-two",
+      "phase": "before",
+      "count": 10,
+      "statuses": {
+        "200": 4,
+        "429": 6
+      },
+      "accepted": 4,
+      "rejected": 6,
+      "expectedAccepted": 4,
+      "acceptedOverLogicalBudget": 0.6666666666666666,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 1.0804060000009486,
+      "p95Ms": 2.789970000001631,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "boundary",
+      "mode": "redis-two",
+      "phase": "after",
+      "count": 12,
+      "statuses": {
+        "200": 6,
+        "429": 6
+      },
+      "accepted": 6,
+      "rejected": 6,
+      "expectedAccepted": 6,
+      "acceptedOverLogicalBudget": 1,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.7447509999983595,
+      "p95Ms": 2.1096230000002834,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "outage",
+      "mode": "none",
+      "phase": "down",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.539705999999569,
+      "p95Ms": 0.9986400000016147,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "outage",
+      "mode": "memory-one",
+      "phase": "down",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.6240649999999732,
+      "p95Ms": 0.7556340000010096,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "outage",
+      "mode": "memory-two",
+      "phase": "down",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 0.8095849999990605,
+      "p95Ms": 0.8280110000014247,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "outage",
+      "mode": "redis-two",
+      "phase": "down",
+      "count": 2,
+      "statuses": {
+        "503": 2
+      },
+      "accepted": 0,
+      "rejected": 0,
+      "expectedAccepted": 0,
+      "acceptedOverLogicalBudget": 0,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.771679999998014,
+      "p95Ms": 0.9118579999994836,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "outage",
+      "mode": "redis-open",
+      "phase": "down",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.8561229999977513,
+      "p95Ms": 0.9637189999994007,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "outage",
+      "mode": "none",
+      "phase": "recovered",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": null,
+      "logicalBudgetPerWindow": null,
+      "effectiveBudgetPerWindow": null,
+      "p50Ms": 0.352151999999478,
+      "p95Ms": 0.6788659999983793,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "outage",
+      "mode": "memory-one",
+      "phase": "recovered",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 0.365233000000444,
+      "p95Ms": 0.6083749999997963,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "outage",
+      "mode": "memory-two",
+      "phase": "recovered",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 12,
+      "p50Ms": 0.6423510000022361,
+      "p95Ms": 0.7235699999982899,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "outage",
+      "mode": "redis-two",
+      "phase": "recovered",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 1.2825940000002447,
+      "p95Ms": 1.3774699999994482,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    },
+    {
+      "repetition": 3,
+      "scenario": "outage",
+      "mode": "redis-open",
+      "phase": "recovered",
+      "count": 2,
+      "statuses": {
+        "200": 2
+      },
+      "accepted": 2,
+      "rejected": 0,
+      "expectedAccepted": 2,
+      "acceptedOverLogicalBudget": 0.3333333333333333,
+      "logicalBudgetPerWindow": 6,
+      "effectiveBudgetPerWindow": 6,
+      "p50Ms": 1.4190740000012738,
+      "p95Ms": 1.4608420000004116,
+      "regularUsers": null,
+      "regularUsersLimited": null
+    }
+  ],
+  "spread": [
+    {
+      "scenario": "normal",
+      "mode": "none",
+      "phase": "main",
+      "accepted": {
+        "min": 4,
+        "median": 4,
+        "max": 4
+      },
+      "p50Ms": {
+        "min": 0.57658900000024,
+        "median": 0.6888219999982539,
+        "max": 0.7582840000000033
+      },
+      "p95Ms": {
+        "min": 0.687884999999369,
+        "median": 0.8125220000001718,
+        "max": 0.9866520000000492
+      }
+    },
+    {
+      "scenario": "normal",
+      "mode": "memory-one",
+      "phase": "main",
+      "accepted": {
+        "min": 4,
+        "median": 4,
+        "max": 4
+      },
+      "p50Ms": {
+        "min": 0.6387940000004164,
+        "median": 0.6906330000001617,
+        "max": 0.91126300000019
+      },
+      "p95Ms": {
+        "min": 0.7843510000002425,
+        "median": 0.8762560000013764,
+        "max": 1.205253999999968
+      }
+    },
+    {
+      "scenario": "normal",
+      "mode": "memory-two",
+      "phase": "main",
+      "accepted": {
+        "min": 4,
+        "median": 4,
+        "max": 4
+      },
+      "p50Ms": {
+        "min": 0.722395000000688,
+        "median": 0.8304410000000644,
+        "max": 1.1633479999998144
+      },
+      "p95Ms": {
+        "min": 0.8189509999992879,
+        "median": 0.9010610000004817,
+        "max": 1.2090189999998984
+      }
+    },
+    {
+      "scenario": "normal",
+      "mode": "redis-two",
+      "phase": "main",
+      "accepted": {
+        "min": 4,
+        "median": 4,
+        "max": 4
+      },
+      "p50Ms": {
+        "min": 1.204424999999901,
+        "median": 1.3145410000015545,
+        "max": 1.3682220000000598
+      },
+      "p95Ms": {
+        "min": 1.3003630000002886,
+        "median": 1.4239760000000388,
+        "max": 1.5230159999998705
+      }
+    },
+    {
+      "scenario": "excess",
+      "mode": "none",
+      "phase": "main",
+      "accepted": {
+        "min": 16,
+        "median": 16,
+        "max": 16
+      },
+      "p50Ms": {
+        "min": 0.3338739999999234,
+        "median": 0.38990499999999884,
+        "max": 0.6281060000001162
+      },
+      "p95Ms": {
+        "min": 0.5515340000001743,
+        "median": 0.7233570000000782,
+        "max": 0.8357560000004014
+      }
+    },
+    {
+      "scenario": "excess",
+      "mode": "memory-one",
+      "phase": "main",
+      "accepted": {
+        "min": 6,
+        "median": 6,
+        "max": 6
+      },
+      "p50Ms": {
+        "min": 0.29463100000066333,
+        "median": 0.43479200000001583,
+        "max": 0.6471550000001116
+      },
+      "p95Ms": {
+        "min": 0.585772000000361,
+        "median": 0.7789520000005723,
+        "max": 1.3659789999999248
+      }
+    },
+    {
+      "scenario": "excess",
+      "mode": "memory-two",
+      "phase": "main",
+      "accepted": {
+        "min": 12,
+        "median": 12,
+        "max": 12
+      },
+      "p50Ms": {
+        "min": 0.5364009999993868,
+        "median": 0.6638820000007399,
+        "max": 0.7556259999998929
+      },
+      "p95Ms": {
+        "min": 0.704689000000144,
+        "median": 0.8809049999999843,
+        "max": 1.0813210000001163
+      }
+    },
+    {
+      "scenario": "excess",
+      "mode": "redis-two",
+      "phase": "main",
+      "accepted": {
+        "min": 6,
+        "median": 6,
+        "max": 6
+      },
+      "p50Ms": {
+        "min": 0.9616939999996248,
+        "median": 1.0398160000004282,
+        "max": 1.0954460000000381
+      },
+      "p95Ms": {
+        "min": 1.167287000000215,
+        "median": 1.7646270000000186,
+        "max": 2.7004459999989194
+      }
+    },
+    {
+      "scenario": "nat",
+      "mode": "none",
+      "phase": "main",
+      "accepted": {
+        "min": 8,
+        "median": 8,
+        "max": 8
+      },
+      "p50Ms": {
+        "min": 0.34689200000138953,
+        "median": 0.4843460000010964,
+        "max": 0.5456319999998414
+      },
+      "p95Ms": {
+        "min": 0.5247540000000299,
+        "median": 0.5933270000004995,
+        "max": 1.371354999999994
+      }
+    },
+    {
+      "scenario": "nat",
+      "mode": "memory-one",
+      "phase": "main",
+      "accepted": {
+        "min": 6,
+        "median": 6,
+        "max": 6
+      },
+      "p50Ms": {
+        "min": 0.34384099999988393,
+        "median": 0.4642729999995936,
+        "max": 0.5482810000000882
+      },
+      "p95Ms": {
+        "min": 0.5119859999995242,
+        "median": 0.6329459999997198,
+        "max": 1.033474999999953
+      }
+    },
+    {
+      "scenario": "nat",
+      "mode": "memory-two",
+      "phase": "main",
+      "accepted": {
+        "min": 8,
+        "median": 8,
+        "max": 8
+      },
+      "p50Ms": {
+        "min": 0.44777699999940523,
+        "median": 0.5889230000000225,
+        "max": 0.6529499999996915
+      },
+      "p95Ms": {
+        "min": 0.605982999999469,
+        "median": 0.7487190000001647,
+        "max": 0.7662669999990612
+      }
+    },
+    {
+      "scenario": "nat",
+      "mode": "redis-two",
+      "phase": "main",
+      "accepted": {
+        "min": 6,
+        "median": 6,
+        "max": 6
+      },
+      "p50Ms": {
+        "min": 0.8040670000009413,
+        "median": 0.8776040000000194,
+        "max": 1.1058430000011867
+      },
+      "p95Ms": {
+        "min": 0.8432670000001963,
+        "median": 1.0473860000001878,
+        "max": 1.946513999999297
+      }
+    },
+    {
+      "scenario": "boundary",
+      "mode": "none",
+      "phase": "anchor",
+      "accepted": {
+        "min": 2,
+        "median": 2,
+        "max": 2
+      },
+      "p50Ms": {
+        "min": 0.5093399999987014,
+        "median": 0.5309599999998227,
+        "max": 0.8810610000000452
+      },
+      "p95Ms": {
+        "min": 0.5243629999986297,
+        "median": 0.5856519999999819,
+        "max": 1.0318829999996524
+      }
+    },
+    {
+      "scenario": "boundary",
+      "mode": "none",
+      "phase": "before",
+      "accepted": {
+        "min": 10,
+        "median": 10,
+        "max": 10
+      },
+      "p50Ms": {
+        "min": 0.4802219999983208,
+        "median": 0.5124869999999646,
+        "max": 0.7227100000000064
+      },
+      "p95Ms": {
+        "min": 1.103307000001223,
+        "median": 1.447440000003553,
+        "max": 1.915592999999717
+      }
+    },
+    {
+      "scenario": "boundary",
+      "mode": "none",
+      "phase": "after",
+      "accepted": {
+        "min": 12,
+        "median": 12,
+        "max": 12
+      },
+      "p50Ms": {
+        "min": 0.42505899999741814,
+        "median": 0.4302379999999175,
+        "max": 0.5017799999986892
+      },
+      "p95Ms": {
+        "min": 1.216379000001325,
+        "median": 1.4537140000011277,
+        "max": 2.5082280000001447
+      }
+    },
+    {
+      "scenario": "boundary",
+      "mode": "memory-one",
+      "phase": "anchor",
+      "accepted": {
+        "min": 2,
+        "median": 2,
+        "max": 2
+      },
+      "p50Ms": {
+        "min": 0.530468999999357,
+        "median": 0.5394520000008924,
+        "max": 0.5910380000000259
+      },
+      "p95Ms": {
+        "min": 0.7032020000006014,
+        "median": 0.7783069999986765,
+        "max": 0.9160640000000058
+      }
+    },
+    {
+      "scenario": "boundary",
+      "mode": "memory-one",
+      "phase": "before",
+      "accepted": {
+        "min": 4,
+        "median": 4,
+        "max": 4
+      },
+      "p50Ms": {
+        "min": 0.36231299999781186,
+        "median": 0.4648479999996198,
+        "max": 0.6741839999999684
+      },
+      "p95Ms": {
+        "min": 1.241492000001017,
+        "median": 1.3491800000010699,
+        "max": 1.6819139999997788
+      }
+    },
+    {
+      "scenario": "boundary",
+      "mode": "memory-one",
+      "phase": "after",
+      "accepted": {
+        "min": 6,
+        "median": 6,
+        "max": 6
+      },
+      "p50Ms": {
+        "min": 0.6567740000000413,
+        "median": 0.7064410000002681,
+        "max": 0.7109259999997448
+      },
+      "p95Ms": {
+        "min": 1.4610619999998562,
+        "median": 1.4986879999996745,
+        "max": 1.7780070000007981
+      }
+    },
+    {
+      "scenario": "boundary",
+      "mode": "memory-two",
+      "phase": "anchor",
+      "accepted": {
+        "min": 2,
+        "median": 2,
+        "max": 2
+      },
+      "p50Ms": {
+        "min": 0.8510319999986677,
+        "median": 0.9003069999998843,
+        "max": 1.0544449999979406
+      },
+      "p95Ms": {
+        "min": 0.9249369999997725,
+        "median": 0.9268189999997958,
+        "max": 1.164158999999927
+      }
+    },
+    {
+      "scenario": "boundary",
+      "mode": "memory-two",
+      "phase": "before",
+      "accepted": {
+        "min": 10,
+        "median": 10,
+        "max": 10
+      },
+      "p50Ms": {
+        "min": 0.4588239999975485,
+        "median": 0.7796450000005279,
+        "max": 0.9764459999996689
+      },
+      "p95Ms": {
+        "min": 1.3563799999974435,
+        "median": 2.8969340000003285,
+        "max": 3.6888180000005377
+      }
+    },
+    {
+      "scenario": "boundary",
+      "mode": "memory-two",
+      "phase": "after",
+      "accepted": {
+        "min": 12,
+        "median": 12,
+        "max": 12
+      },
+      "p50Ms": {
+        "min": 0.4914360000002489,
+        "median": 0.5895719999989524,
+        "max": 0.6499229999999443
+      },
+      "p95Ms": {
+        "min": 1.517695000000458,
+        "median": 1.5657850000006874,
+        "max": 1.810566000000108
+      }
+    },
+    {
+      "scenario": "boundary",
+      "mode": "redis-two",
+      "phase": "anchor",
+      "accepted": {
+        "min": 2,
+        "median": 2,
+        "max": 2
+      },
+      "p50Ms": {
+        "min": 1.6517290000001594,
+        "median": 1.7110929999980726,
+        "max": 1.7783159999999043
+      },
+      "p95Ms": {
+        "min": 1.9294779999981984,
+        "median": 2.0020819999990636,
+        "max": 2.003201999999874
+      }
+    },
+    {
+      "scenario": "boundary",
+      "mode": "redis-two",
+      "phase": "before",
+      "accepted": {
+        "min": 4,
+        "median": 4,
+        "max": 4
+      },
+      "p50Ms": {
+        "min": 0.8892020000002958,
+        "median": 0.9238600000007864,
+        "max": 1.0804060000009486
+      },
+      "p95Ms": {
+        "min": 1.908726999999999,
+        "median": 2.0888099999992846,
+        "max": 2.789970000001631
+      }
+    },
+    {
+      "scenario": "boundary",
+      "mode": "redis-two",
+      "phase": "after",
+      "accepted": {
+        "min": 6,
+        "median": 6,
+        "max": 6
+      },
+      "p50Ms": {
+        "min": 0.7447509999983595,
+        "median": 1.0480509999997594,
+        "max": 1.0991070000000036
+      },
+      "p95Ms": {
+        "min": 2.006470000000263,
+        "median": 2.1096230000002834,
+        "max": 2.1450919999997495
+      }
+    },
+    {
+      "scenario": "outage",
+      "mode": "none",
+      "phase": "down",
+      "accepted": {
+        "min": 2,
+        "median": 2,
+        "max": 2
+      },
+      "p50Ms": {
+        "min": 0.539705999999569,
+        "median": 0.8683120000005147,
+        "max": 0.9582309999996141
+      },
+      "p95Ms": {
+        "min": 0.9986400000016147,
+        "median": 1.3209549999992305,
+        "max": 1.3482100000001083
+      }
+    },
+    {
+      "scenario": "outage",
+      "mode": "memory-one",
+      "phase": "down",
+      "accepted": {
+        "min": 2,
+        "median": 2,
+        "max": 2
+      },
+      "p50Ms": {
+        "min": 0.6240649999999732,
+        "median": 0.8538160000007338,
+        "max": 0.9023999999999432
+      },
+      "p95Ms": {
+        "min": 0.7556340000010096,
+        "median": 0.9601019999990967,
+        "max": 0.9982069999996384
+      }
+    },
+    {
+      "scenario": "outage",
+      "mode": "memory-two",
+      "phase": "down",
+      "accepted": {
+        "min": 2,
+        "median": 2,
+        "max": 2
+      },
+      "p50Ms": {
+        "min": 0.8095849999990605,
+        "median": 0.9375149999996211,
+        "max": 1.0025530000002618
+      },
+      "p95Ms": {
+        "min": 0.8280110000014247,
+        "median": 0.9411610000006476,
+        "max": 1.102512000000388
+      }
+    },
+    {
+      "scenario": "outage",
+      "mode": "redis-two",
+      "phase": "down",
+      "accepted": {
+        "min": 0,
+        "median": 0,
+        "max": 0
+      },
+      "p50Ms": {
+        "min": 0.7648339999996097,
+        "median": 0.771679999998014,
+        "max": 0.7763029999987339
+      },
+      "p95Ms": {
+        "min": 0.8515939999997499,
+        "median": 0.9118579999994836,
+        "max": 0.9281549999996059
+      }
+    },
+    {
+      "scenario": "outage",
+      "mode": "redis-open",
+      "phase": "down",
+      "accepted": {
+        "min": 2,
+        "median": 2,
+        "max": 2
+      },
+      "p50Ms": {
+        "min": 0.8561229999977513,
+        "median": 0.9109850000004371,
+        "max": 1.0110749999994368
+      },
+      "p95Ms": {
+        "min": 0.9220649999988382,
+        "median": 0.9637189999994007,
+        "max": 1.0270649999993111
+      }
+    },
+    {
+      "scenario": "outage",
+      "mode": "none",
+      "phase": "recovered",
+      "accepted": {
+        "min": 2,
+        "median": 2,
+        "max": 2
+      },
+      "p50Ms": {
+        "min": 0.352151999999478,
+        "median": 0.48823600000014267,
+        "max": 0.6119510000007722
+      },
+      "p95Ms": {
+        "min": 0.6788659999983793,
+        "median": 0.8123370000002978,
+        "max": 0.8206809999992402
+      }
+    },
+    {
+      "scenario": "outage",
+      "mode": "memory-one",
+      "phase": "recovered",
+      "accepted": {
+        "min": 2,
+        "median": 2,
+        "max": 2
+      },
+      "p50Ms": {
+        "min": 0.365233000000444,
+        "median": 0.6452150000004622,
+        "max": 1.2876539999997476
+      },
+      "p95Ms": {
+        "min": 0.6083749999997963,
+        "median": 0.7965870000007271,
+        "max": 1.3511769999995522
+      }
+    },
+    {
+      "scenario": "outage",
+      "mode": "memory-two",
+      "phase": "recovered",
+      "accepted": {
+        "min": 2,
+        "median": 2,
+        "max": 2
+      },
+      "p50Ms": {
+        "min": 0.6423510000022361,
+        "median": 0.674643999998807,
+        "max": 0.751683000000412
+      },
+      "p95Ms": {
+        "min": 0.7235699999982899,
+        "median": 0.763983000000735,
+        "max": 0.9277979999997115
+      }
+    },
+    {
+      "scenario": "outage",
+      "mode": "redis-two",
+      "phase": "recovered",
+      "accepted": {
+        "min": 2,
+        "median": 2,
+        "max": 2
+      },
+      "p50Ms": {
+        "min": 1.2391999999999825,
+        "median": 1.2825940000002447,
+        "max": 1.579157000000123
+      },
+      "p95Ms": {
+        "min": 1.3774699999994482,
+        "median": 1.8157120000005307,
+        "max": 1.8564430000005814
+      }
+    },
+    {
+      "scenario": "outage",
+      "mode": "redis-open",
+      "phase": "recovered",
+      "accepted": {
+        "min": 2,
+        "median": 2,
+        "max": 2
+      },
+      "p50Ms": {
+        "min": 1.4190740000012738,
+        "median": 1.5211579999995593,
+        "max": 1.9395859999995082
+      },
+      "p95Ms": {
+        "min": 1.4608420000004116,
+        "median": 1.5290590000004158,
+        "max": 1.946578999999474
+      }
+    }
+  ],
+  "recovery": [
+    {
+      "repetition": 1,
+      "type": "recovered",
+      "slot": "redis-a",
+      "recoveryMs": 473.72593400000005
+    },
+    {
+      "repetition": 1,
+      "type": "recovered",
+      "slot": "redis-b",
+      "recoveryMs": 474.7478009999995
+    },
+    {
+      "repetition": 1,
+      "type": "recovered",
+      "slot": "open-a",
+      "recoveryMs": 475.788364
+    },
+    {
+      "repetition": 1,
+      "type": "recovered",
+      "slot": "open-b",
+      "recoveryMs": 476.8476270000001
+    },
+    {
+      "repetition": 2,
+      "type": "recovered",
+      "slot": "redis-a",
+      "recoveryMs": 503.016599999999
+    },
+    {
+      "repetition": 2,
+      "type": "recovered",
+      "slot": "redis-b",
+      "recoveryMs": 503.8661949999987
+    },
+    {
+      "repetition": 2,
+      "type": "recovered",
+      "slot": "open-a",
+      "recoveryMs": 504.79831899999954
+    },
+    {
+      "repetition": 2,
+      "type": "recovered",
+      "slot": "open-b",
+      "recoveryMs": 505.6783749999995
+    },
+    {
+      "repetition": 3,
+      "type": "recovered",
+      "slot": "redis-a",
+      "recoveryMs": 485.17765900000086
+    },
+    {
+      "repetition": 3,
+      "type": "recovered",
+      "slot": "redis-b",
+      "recoveryMs": 485.99964700000055
+    },
+    {
+      "repetition": 3,
+      "type": "recovered",
+      "slot": "open-a",
+      "recoveryMs": 486.80204700000104
+    },
+    {
+      "repetition": 3,
+      "type": "recovered",
+      "slot": "open-b",
+      "recoveryMs": 487.8460030000024
+    }
+  ]
+}

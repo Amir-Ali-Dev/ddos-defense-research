@@ -1,20 +1,17 @@
 # Spamhaus 2013
 
-## Why It Matters
+- Occurrence: March 2013; provider contacted on 2013-03-18.
+- Publication: 2013-03-27.
+- Primary source: [Cloudflare incident operator](https://blog.cloudflare.com/the-ddos-that-almost-broke-the-internet/).
+- Reviewed: 2026-10-19.
 
-The Spamhaus incident made DNS amplification and open resolver abuse highly
-visible to the broader internet operations community.
+## Reported observation
 
-## Defensive Lessons
+Cloudflare describes changing DNS amplification traffic and escalation toward upstream connectivity. Reported rates describe particular stages of its observation, not the health of the entire internet.
 
-- Open and misconfigured infrastructure can become an unintended amplifier.
-- Organizations need upstream mitigation, not only local firewall rules.
-- Internet-wide hygiene, including source address validation, reduces systemic
-  risk.
+## Defensive interpretation
 
-## Architecture Takeaway
+Upstream coordination and source-address validation matter; an origin firewall cannot recover a saturated provider link.
 
-Volumetric attacks often need to be handled before traffic reaches your network
-link. CDN, Anycast, scrubbing, and provider escalation are architectural
-controls, not optional extras.
-
+These recommendations are repository analysis, not a quotation or a reproduction procedure.
+See the [local lab](../lab/README.md) and [runbook](../docs/OPERATIONS.md).

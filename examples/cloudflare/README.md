@@ -1,33 +1,32 @@
-# Cloudflare WAF And Rate Limit Rule Examples
+# Cloudflare templates — conceptual and not deployed
 
-These examples are defensive templates for Cloudflare WAF custom rules and rate
-limiting rules. Validate field availability and exact action names against your
-Cloudflare plan and account features before production use.
+The [JSON example](rate-limit-rules.template.json) uses the Rulesets API zone ruleset
+shape: kind=zone, phase=http_ratelimit, action=block and a nested ratelimit object with
+period, requests_per_period, mitigation_timeout and characteristics. It has no account,
+zone/ruleset id, token or apply script. It is not a directly executable deployment.
+It is not schema/API-account tested. Review existing phase entrypoints to avoid replacing
+rules; use the documented create/update endpoint for your actual zone/ruleset.
 
-## WAF Custom Rules
+The example uses 5 POST login requests / 10 seconds by IP and data-center id,
+with a 10-second block. These settings are illustrative, not equivalent to the local
+Redis counter. Cloudflare counters are distributed; do not promise an exact global cap.
+The previous period_seconds/mitigation object and block_or_challenge action were not
+valid Rulesets API fields/actions and have been removed.
 
-Full examples: [waf-custom-rules.md](waf-custom-rules.md)
+Allowed periods, characteristics, counting expressions, rule counts and actions vary
+by plan/product entitlement. Header/API key/custom user characteristics and response-based
+counting may require Advanced Rate Limiting; no unvalidated header establishes identity.
+This example deliberately uses source IP, not an arbitrary API key. Check the current
+parameter/availability tables in your account; no paid tier is required for the local lab.
 
-| Goal | Expression | Action |
-|---|---|---|
-| Challenge suspicious login traffic | `(http.request.uri.path eq "/auth/login" and http.request.method eq "POST" and cf.threat_score gt 10)` | Managed Challenge |
-| Protect admin routes | `(http.request.uri.path starts_with "/admin" and not ip.src in {203.0.113.10 203.0.113.11})` | Block |
-| Challenge unusual API clients | `(http.request.uri.path starts_with "/api/" and not cf.client.bot and http.user_agent eq "")` | Managed Challenge |
-| Block unexpected methods | `(http.request.method in {"TRACE" "CONNECT"})` | Block |
-| Add pressure relief for non-critical export route | `(http.request.uri.path starts_with "/reports/export")` | Managed Challenge or stricter rate limit |
+[WAF expressions](waf-custom-rules.md) are also unapplied. Avoid browser challenges on
+machine APIs without a compatible client flow. Log/simulate only where the plan supports
+it; otherwise test a narrow rule and monitor false positives before broad enforcement.
 
-## Rate Limit Rule Templates
+Official sources reviewed 2026-10-19:
 
-| Route | Characteristics | Threshold | Mitigation |
-|---|---|---|---|
-| `/auth/login` | IP, path, method | 10 requests / 60 seconds | Managed Challenge for 10 minutes |
-| `/password/reset` | IP, path, method | 5 requests / 60 seconds | Managed Challenge |
-| `/api/*` | API token or IP, path | 300 requests / 60 seconds | Block or challenge depending on user class |
-| `/reports/export` | user id or API key, path | 3 requests / 60 seconds | 429 / challenge |
-
-## Operational Notes
-
-- Start new rules in log or simulate mode when possible.
-- Use managed challenge before broad blocking when real-user impact is unclear.
-- Keep emergency rules time-bound and document why they were added.
-- Pair WAF rules with origin isolation so attackers cannot bypass the edge.
+- [Create zone rate-limit rules via API](https://developers.cloudflare.com/waf/rate-limiting-rules/create-api/).
+- [Rate-limit parameters and availability](https://developers.cloudflare.com/waf/rate-limiting-rules/parameters/).
+- [Distributed rate counting](https://developers.cloudflare.com/waf/rate-limiting-rules/request-rate/).
+- [Rules language functions](https://developers.cloudflare.com/ruleset-engine/rules-language/functions/).
+- [Threat score reference](https://developers.cloudflare.com/ruleset-engine/rules-language/fields/reference/cf.threat_score/).

@@ -1,25 +1,24 @@
 {
   "name": "nestjs-ddos-defense-example",
+  "version": "1.0.0",
   "private": true,
   "type": "commonjs",
   "scripts": {
-    "start": "nest start",
-    "start:dev": "nest start --watch"
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/main.js"
   },
   "dependencies": {
-    "@nestjs/common": "^11.0.0",
-    "@nestjs/core": "^11.0.0",
-    "@nestjs/platform-express": "^11.0.0",
-    "@nestjs/throttler": "^6.0.0",
-    "express": "^4.19.2",
-    "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1"
+    "@nestjs/common": "11.2.7",
+    "@nestjs/core": "11.2.7",
+    "@nestjs/platform-express": "11.2.7",
+    "@nestjs/throttler": "6.7.1",
+    "express": "5.3.0",
+    "reflect-metadata": "0.2.2",
+    "rxjs": "7.8.2"
   },
   "devDependencies": {
-    "@nestjs/cli": "^11.0.0",
-    "@nestjs/schematics": "^11.0.0",
-    "@types/express": "^4.17.21",
-    "@types/node": "^22.0.0",
-    "typescript": "^5.7.0"
+    "@types/express": "5.0.6",
+    "@types/node": "24.10.1",
+    "typescript": "5.9.3"
   }
 }

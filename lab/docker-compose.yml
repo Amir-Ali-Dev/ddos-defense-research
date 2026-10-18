@@ -1,15 +1,128 @@
+name: ddos-defense-lab
+x-application: &application
+  build:
+    context: ..
+    dockerfile: lab/Dockerfile
+  init: true
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  mem_limit: 256m
+  cpus: 1.0
+  pids_limit: 100
+  networks: [local]
+  healthcheck:
+    test:
+      [
+        CMD,
+        node,
+        -e,
+        "fetch('http://127.0.0.1:'+process.env.PORT+'/healthz').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))",
+      ]
+    interval: 2s
+    timeout: 2s
+    retries: 30
+    start_period: 5s
+
 services:
+  backend:
+    image: node:24.22.0-alpine
+    profiles: [nginx, all]
+    command: [node, /demo/backend.cjs]
+    volumes: [./backend.cjs:/demo/backend.cjs:ro]
+    networks: [local]
+    mem_limit: 64m
+    healthcheck:
+      test:
+        [
+          CMD,
+          node,
+          -e,
+          "fetch('http://127.0.0.1:8000/healthz').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))",
+        ]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+
   edge:
-    image: nginx:1.27-alpine
-    ports:
-      - "8080:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    image: nginx:1.30.6-alpine
+    profiles: [nginx, all]
+    ports: [127.0.0.1:8080:80]
+    volumes: [./nginx.conf:/etc/nginx/nginx.conf:ro]
     depends_on:
-      - app
+      backend: { condition: service_healthy }
+    networks: [local]
+    mem_limit: 64m
+    healthcheck:
+      test: [CMD, wget, -q, -O, /dev/null, http://127.0.0.1/healthz]
+      interval: 2s
+      timeout: 2s
+      retries: 20
 
-  app:
-    image: nginxdemos/hello:plain-text
-    expose:
-      - "80"
+  nestjs:
+    <<: *application
+    profiles: [nestjs, all]
+    environment:
+      PORT: "3000"
+      WINDOW_MS: "2000"
+    ports: [127.0.0.1:3000:3000]
 
+  redis:
+    image: redis:8.2.10-alpine
+    profiles: [redis, all]
+    command:
+      [
+        redis-server,
+        --save,
+        "",
+        --appendonly,
+        "no",
+        --maxmemory,
+        64mb,
+        --maxmemory-policy,
+        noeviction,
+      ]
+    networks: [local]
+    mem_limit: 128m
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+
+  redis-app-a:
+    <<: *application
+    profiles: [redis, all]
+    command: [node, examples/redis/server.js]
+    environment: &redis-env
+      PORT: "3001"
+      WINDOW_MS: "2000"
+      REDIS_URL: redis://redis:6379
+      REDIS_FAILURE_POLICY: closed
+    ports: [127.0.0.1:3001:3001]
+    depends_on:
+      redis: { condition: service_healthy }
+    healthcheck: &redis-health
+      test:
+        [
+          CMD,
+          node,
+          -e,
+          "fetch('http://127.0.0.1:3001/readyz').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))",
+        ]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+
+  redis-app-b:
+    <<: *application
+    profiles: [redis, all]
+    command: [node, examples/redis/server.js]
+    environment: *redis-env
+    ports: [127.0.0.1:3002:3001]
+    depends_on:
+      redis: { condition: service_healthy }
+    healthcheck: *redis-health
+
+networks:
+  local: {}

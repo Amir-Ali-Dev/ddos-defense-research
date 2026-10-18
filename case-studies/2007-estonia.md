@@ -1,21 +1,17 @@
 # Estonia 2007
 
-## Why It Matters
+- Occurrence: 2007-04-27 through 2007-05-18.
+- Publication: 2008 (conference proceedings; exact publication day not specified).
+- Primary source: [CCDCOE / Rain Ottis](https://ccdcoe.org/library/publications/analysis-of-the-2007-cyber-attacks-against-estonia-from-the-information-warfare-perspective/).
+- Reviewed: 2026-10-19.
 
-The 2007 attacks against Estonia showed that DDoS can become a national
-resilience problem, not just a single-company outage.
+## Reported observation
 
-## Defensive Lessons
+The analysis describes a campaign against Estonian online services. Its evidence has visibility limits; it does not establish a universal traffic measurement or simple attribution.
 
-- Critical digital services need continuity plans.
-- Government, banking, media, telecom, and DNS dependencies should be mapped.
-- Response requires coordination across technical, legal, communications, and
-  provider teams.
-- Public communication matters when availability is part of public trust.
+## Defensive interpretation
 
-## Architecture Takeaway
+Map critical DNS and provider dependencies; prepare coordinated continuity and incident response.
 
-Do not design critical services around a small number of unprotected public
-entry points. Redundant DNS, upstream provider coordination, and tested
-incident runbooks matter.
-
+These recommendations are repository analysis, not a quotation or a reproduction procedure.
+See the [local lab](../lab/README.md) and [runbook](../docs/OPERATIONS.md).

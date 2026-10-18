@@ -1,21 +1,17 @@
-# Mirai And Dyn 2016
+# Dyn DNS disruption 2016
 
-## Why It Matters
+- Occurrence: 2016-10-21.
+- Publication: 2016-10-24.
+- Primary source: [RIPE NCC / Massimo Candela and Emile Aben](https://labs.ripe.net/author/massimo_candela/a-quick-look-at-the-attack-on-dyn/).
+- Reviewed: 2026-10-19.
 
-Mirai demonstrated the impact of large numbers of poorly secured IoT devices.
-The Dyn incident also showed how DNS provider disruption can indirectly affect
-many unrelated websites and applications.
+## Reported observation
 
-## Defensive Lessons
+RIPE NCC analyzed its own BGP and RIPE Atlas DNS measurements around the disruption. This is primary measurement evidence, not the Dyn internal postmortem; its coverage of the first wave is partial. No bot count, exact peak rate or definitive attribution is asserted here.
 
-- DNS is part of the availability architecture.
-- Provider concentration creates correlated outage risk.
-- IoT security failures can become internet-scale availability problems.
-- A site can be healthy while users still cannot resolve or reach it.
+## Defensive interpretation
 
-## Architecture Takeaway
+Monitor resolution separately from application health; review DNS dependency concentration and failover.
 
-Use resilient DNS, understand provider dependencies, and avoid treating DNS as
-a background detail. For high-value systems, consider multiple DNS providers or
-well-tested failover patterns.
-
+These recommendations are repository analysis, not a quotation or a reproduction procedure.
+See the [local lab](../lab/README.md) and [runbook](../docs/OPERATIONS.md).

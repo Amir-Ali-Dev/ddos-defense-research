@@ -1,48 +1,32 @@
-# Cloudflare WAF Custom Rule Examples
+# Reviewed WAF expression examples (unapplied)
 
-These expressions are templates for defensive edge filtering. Validate fields,
-actions, phases, and plan availability in the current Cloudflare dashboard or
-Rulesets API before production use.
+Custom rule body/action and rule allowance depend on your plan. These are matching
+expressions, not an exported/applied ruleset. See [plan notes and sources](README.md).
 
-## Login Protection
+Restrict administration to your actual approved addresses (the listed TEST-NET IPs
+are documentation placeholders, not a production allowlist):
 
-```text
-(http.request.uri.path eq "/auth/login" and http.request.method eq "POST" and cf.threat_score gt 10)
-```
+~~~text
+(starts_with(http.request.uri.path, "/admin/") and not ip.src in {203.0.113.10 203.0.113.11})
+~~~
 
-Suggested action: `Managed Challenge`
+Suggested action: block. Handle /admin itself separately if your application serves it.
 
-Why: Login is expensive because it often touches identity services, password
-hashing, risk scoring, and database lookups.
+Unexpected methods:
 
-## Admin Route Isolation
-
-```text
-(http.request.uri.path starts_with "/admin" and not ip.src in {203.0.113.10 203.0.113.11})
-```
-
-Suggested action: `Block`
-
-Why: Admin routes should have a smaller trusted network surface than public
-application routes.
-
-## Empty User-Agent On API Routes
-
-```text
-(http.request.uri.path starts_with "/api/" and not cf.client.bot and http.user_agent eq "")
-```
-
-Suggested action: `Managed Challenge`
-
-Why: Empty user agents are not always malicious, but they are useful as one
-signal in a scoped rule.
-
-## Unexpected HTTP Methods
-
-```text
+~~~text
 (http.request.method in {"TRACE" "CONNECT"})
-```
+~~~
 
-Suggested action: `Block`
+Suggested action: block only after confirming legitimate protocol requirements.
 
-Why: Most public web applications do not need these methods exposed at the edge.
+Login scope for a narrowly staged rule:
+
+~~~text
+(http.request.uri.path eq "/auth/login" and http.request.method eq "POST")
+~~~
+
+Use the rate-limit example rather than challenging every API call. A challenge is a
+browser interaction and can break non-browser clients. Do not block solely for an empty
+User-Agent. The old infix starts_with syntax is replaced by the starts_with() function;
+the obsolete cf.threat_score condition is removed. Protect the origin from direct bypass.

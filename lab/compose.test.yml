@@ -1,0 +1,3 @@
+services:
+  redis:
+    ports: [127.0.0.1:16379:6379]
