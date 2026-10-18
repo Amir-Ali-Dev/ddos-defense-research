@@ -4,6 +4,16 @@ This folder contains visual assets used by the README and repository profile.
 The README uses SVG files so they render cleanly on GitHub and stay lightweight.
 PNG copies are included for social preview uploads and external sharing.
 
+## Preview
+
+![Repository banner](hero.svg)
+
+![Repository overview](overview-grid.svg)
+
+![Mitigation layers](../diagrams/mitigation-layers.svg)
+
+Diagrams live in [../diagrams](../diagrams/README.md). SVG files are the editable sources; regenerate matching PNG exports when changing them.
+
 ## Large Images
 
 | Asset | Use |

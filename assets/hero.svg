@@ -12,7 +12,7 @@
   <text x="86" y="116" class="eyebrow">Defensive Security Reference</text>
   <text x="82" y="188" class="title">DDoS Defense</text>
   <text x="82" y="252" class="title">Research</text>
-  <text x="86" y="300" class="sub">Detection, mitigation, and resilient web architecture</text>
+  <text x="86" y="292" class="sub">Detection, mitigation, and resilient</text><text x="86" y="320" class="sub">web architecture</text>
   <rect x="86" y="336" width="150" height="42" rx="21" class="pill"/><text x="161" y="363" text-anchor="middle" class="ptext">Defensive</text>
   <rect x="254" y="336" width="140" height="42" rx="21" class="pill2"/><text x="324" y="363" text-anchor="middle" class="ptext">Practical</text>
   <rect x="412" y="336" width="164" height="42" rx="21" class="pill3"/><text x="494" y="363" text-anchor="middle" class="ptext">Architecture</text>
