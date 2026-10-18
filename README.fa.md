@@ -34,7 +34,7 @@
 ~~~sh
 git clone https://github.com/Amir-Ali-Dev/ddos-defense-research.git
 cd ddos-defense-research
-# Before merge: git checkout prepare-educational-v1
+git switch prepare-educational-v1
 docker compose -f lab/docker-compose.yml --profile all up -d --build --wait --wait-timeout 120
 curl -i http://127.0.0.1:8080/api/status
 curl -i http://127.0.0.1:3000/api/status

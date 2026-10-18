@@ -100,6 +100,8 @@ Mature defense is layered:
 
 ## Architecture At A Glance
 
+The embedded diagram shows the runnable local lab. The broader CDN/WAF design below is conceptual; see [production reference](../diagrams/production-reference.svg).
+
 ![DDoS-resilient architecture](../diagrams/ddos-resilient-architecture.svg)
 
 The most important architectural rule is simple: do not let the public internet
@@ -173,7 +175,7 @@ traffic becomes a guess.
 
 ## Practical Examples
 
-The examples are intentionally defensive and production-oriented:
+The examples are intentionally defensive and educational:
 
 - [Nginx rate limiting](../examples/nginx/README.md): edge-side request and
   connection controls.

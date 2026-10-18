@@ -16,17 +16,30 @@ Work was prepared in an isolated directory and branch; unrelated workspace files
   `nginx -t`. This does not substitute for validating the Linux container lab config.
 - SVG sources parsed successfully with .NET XML parsing.
 
-Repository link/anchor/JSON/YAML checks, clean-install confirmation and CI results are
-recorded in the PR as they finish. No performance benchmark or public-target test was run.
+- A clean `npm ci`, rebuild and the 7 tests also passed with official Node 24.22.0.
+- Repository checks passed for 167 internal links/anchors, JSON/YAML and loopback ports.
+- 45 external URLs were fetched separately: 35 succeeded, 8 returned HTTP 403 and
+  2 ThousandEyes URLs timed out. No HTTP 404 was returned, but blocked/time-limited
+  fetches are not a blanket assertion that every external link is healthy. Critical
+  source documents were additionally reviewed through browser access.
+
+No performance benchmark or public-target functional test was run.
 
 ## Environment limits and separate integration checks
 
 Docker Engine/Desktop was not installed and WSL was not installed on this host.
 No local container build, Redis server, Lua/concurrency integration, Linux Nginx lab,
 multi-app shared counter or actual Redis-outage smoke test was executed here.
-The CI workflow contains those checks with bounded requests, deadlines and always-run
-cleanup. A workflow definition is not evidence of a passing CI run; consult the PR's
-actual check/run result. Failures must be resolved before treating this as a validated release.
+## Actually executed in GitHub Actions
+
+The [successful Linux container run](https://github.com/Amir-Ali-Dev/ddos-defense-research/actions/runs/39167981993)
+tested implementation commit 39e0d2f00160acc2a99e8c60bc1346478a6e2942. Its steps passed:
+clean install, build, 7 local tests, repository checks, audit, Compose validation,
+standalone Linux Nginx validation, container builds and readiness, running Nginx validation,
+real Redis Lua/concurrency/TTL repair and two-app integration, bounded loopback smoke,
+real Redis stop/restart/recovery, and final container/volume cleanup. The integration
+test did not skip for unavailable Redis. The [PR](https://github.com/Amir-Ali-Dev/ddos-defense-research/pull/1)
+shows the latest commit's check; follow-up changes must pass that check as well.
 
 Cloudflare templates were compared with official documentation but not deployed or
 validated against a real account/plan. They are conceptual examples.

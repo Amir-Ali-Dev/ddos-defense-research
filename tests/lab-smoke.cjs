@@ -6,8 +6,6 @@ const composeArgs = [
   "compose",
   "-f",
   path.resolve(__dirname, "../lab/docker-compose.yml"),
-  "-f",
-  path.resolve(__dirname, "../lab/compose.test.yml"),
   "--profile",
   "all",
 ];
@@ -86,7 +84,7 @@ function compose(...args) {
       );
     }
   } finally {
-    compose("up", "-d", "--wait", "--wait-timeout", "30", "redis");
+    compose("start", "redis");
   }
   for (const port of [3001, 3002])
     await ready("http://127.0.0.1:" + port, "/readyz");

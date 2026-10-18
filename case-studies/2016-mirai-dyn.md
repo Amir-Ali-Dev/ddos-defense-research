@@ -1,13 +1,13 @@
 # Dyn DNS disruption 2016
 
 - Occurrence: 2016-10-21.
-- Publication: 2016-10-21.
-- Primary source: [ThousandEyes network measurement operator](https://www.thousandeyes.com/blog/dyn-dns-ddos-attack).
+- Publication: 2016-10-24.
+- Primary source: [RIPE NCC / Massimo Candela and Emile Aben](https://labs.ripe.net/author/massimo_candela/a-quick-look-at-the-attack-on-dyn/).
 - Reviewed: 2026-10-19.
 
 ## Reported observation
 
-ThousandEyes published its own measurements of DNS disruption and related service reachability. This is primary measurement evidence, not the Dyn internal postmortem. No bot count, exact peak rate or definitive attribution is asserted here.
+RIPE NCC analyzed its own BGP and RIPE Atlas DNS measurements around the disruption. This is primary measurement evidence, not the Dyn internal postmortem; its coverage of the first wave is partial. No bot count, exact peak rate or definitive attribution is asserted here.
 
 ## Defensive interpretation
 

@@ -1,7 +1,7 @@
 name: Educational lab checks
 on:
   push:
-    branches: [main, prepare-educational-v1]
+    branches: [main]
   pull_request:
 permissions:
   contents: read
