@@ -18,18 +18,15 @@ Persian version: [README.fa.md](README.fa.md)
 ## Visual Overview
 
 <p align="center">
-  <img src="assets/cards/architecture.svg" alt="architecture overview" width="48%">
-  <img src="assets/cards/detection.svg" alt="detection overview" width="48%">
+  <img src="assets/cards/architecture.svg" alt="Architecture card" width="31%">
+  <img src="assets/cards/detection.svg" alt="Detection card" width="31%">
+  <img src="assets/cards/mitigation.svg" alt="Mitigation card" width="31%">
 </p>
 
 <p align="center">
-  <img src="assets/cards/mitigation.svg" alt="mitigation overview" width="48%">
-  <img src="assets/cards/examples.svg" alt="examples overview" width="48%">
-</p>
-
-<p align="center">
-  <img src="assets/cards/case-studies.svg" alt="case-studies overview" width="48%">
-  <img src="assets/cards/lab.svg" alt="lab overview" width="48%">
+  <img src="assets/cards/examples.svg" alt="Examples card" width="31%">
+  <img src="assets/cards/case-studies.svg" alt="Case studies card" width="31%">
+  <img src="assets/cards/lab.svg" alt="Defensive lab card" width="31%">
 </p>
 
 <p align="center">

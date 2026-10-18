@@ -1,21 +1,47 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="820" viewBox="0 0 1000 820" role="img" aria-labelledby="title desc">
-<title id="title">Layered DDoS Mitigation</title>
-<desc id="desc">Seven complementary defensive layers, with observability and incident response across every layer. DNS resolves names; it is not an inline HTTP proxy.</desc>
-<rect width="1000" height="820" fill="#f8fafc"/>
-<g font-family="Arial, sans-serif" fill="#0f172a">
-<text x="60" y="58" font-size="30" font-weight="700">Layered DDoS Mitigation</text>
-<text x="60" y="90" font-size="17" fill="#475569">Complementary controls protect capacity from the edge to the data tier.</text>
-<rect x="60" y="120" width="880" height="76" rx="14" fill="#ecfeff" stroke="#94a3b8"/>
-<text x="88" y="165" font-size="26" font-weight="700">1</text><text x="140" y="150" font-size="22" font-weight="700">ISP / Scrubbing Provider</text><text x="140" y="177" font-size="17" fill="#475569">Absorb volumetric traffic upstream</text>
-<rect x="60" y="208" width="880" height="76" rx="14" fill="#e0f2fe" stroke="#94a3b8"/>
-<text x="88" y="253" font-size="26" font-weight="700">2</text><text x="140" y="238" font-size="22" font-weight="700">DNS / Anycast</text><text x="140" y="265" font-size="17" fill="#475569">Keep name resolution available</text>
-<rect x="60" y="296" width="880" height="76" rx="14" fill="#f0fdf4" stroke="#94a3b8"/>
-<text x="88" y="341" font-size="26" font-weight="700">3</text><text x="140" y="326" font-size="22" font-weight="700">CDN Edge</text><text x="140" y="353" font-size="17" fill="#475569">Cache content and terminate TLS</text>
-<rect x="60" y="384" width="880" height="76" rx="14" fill="#dcfce7" stroke="#94a3b8"/>
-<text x="88" y="429" font-size="26" font-weight="700">4</text><text x="140" y="414" font-size="22" font-weight="700">WAF / Bot Management</text><text x="140" y="441" font-size="17" fill="#475569">Inspect, challenge, and block</text>
-<rect x="60" y="472" width="880" height="76" rx="14" fill="#fff7ed" stroke="#94a3b8"/>
-<text x="88" y="517" font-size="26" font-weight="700">5</text><text x="140" y="502" font-size="22" font-weight="700">Rate Limiting</text><text x="140" y="529" font-size="17" fill="#475569">Control request rate and cost</text>
-<rect x="60" y="560" width="880" height="76" rx="14" fill="#ffedd5" stroke="#94a3b8"/>
-<text x="88" y="605" font-size="26" font-weight="700">6</text><text x="140" y="590" font-size="22" font-weight="700">Application Backpressure</text><text x="140" y="617" font-size="17" fill="#475569">Bound queues and degrade safely</text>
-<rect x="60" y="648" width="880" height="76" rx="14" fill="#f5f3ff" stroke="#94a3b8"/>
-<text x="88" y="693" font-size="26" font-weight="700">7</text><text x="140" y="678" font-size="22" font-weight="700">Data Tier Protection</text><text x="140" y="705" font-size="17" fill="#475569">Protect cache and database pools</text><rect x="60" y="750" width="880" height="44" rx="12" fill="#0f172a"/><text x="500" y="778" text-anchor="middle" fill="#f8fafc" font-size="17">Logging, metrics, tracing, and incident response support every layer.</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="720" viewBox="0 0 1000 720" role="img" aria-labelledby="title desc">
+  <title id="title">DDoS mitigation layers</title>
+  <desc id="desc">Stacked mitigation layers from upstream providers to observability and incident response.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .layer { stroke: #334155; stroke-width: 2; rx: 12; }
+      .text { font-family: Arial, sans-serif; fill: #0f172a; font-size: 24px; font-weight: 700; }
+      .label { font-family: Arial, sans-serif; fill: #0f172a; font-size: 17px; font-weight: 700; }
+      .small { font-family: Arial, sans-serif; fill: #475569; font-size: 13px; }
+    </style>
+  </defs>
+  <rect class="bg" width="1000" height="720"/>
+  <text x="70" y="58" class="text">Layered DDoS Mitigation</text>
+  <text x="70" y="84" class="small">Each layer removes pressure before the next layer has to spend expensive resources.</text>
+
+  <rect x="120" y="120" width="760" height="64" class="layer" fill="#ecfeff"/>
+  <text x="150" y="146" class="label">1. ISP / Scrubbing Provider</text>
+  <text x="150" y="169" class="small">volumetric absorption</text>
+
+  <rect x="150" y="200" width="700" height="64" class="layer" fill="#e0f2fe"/>
+  <text x="180" y="226" class="label">2. DNS / Anycast</text>
+  <text x="180" y="249" class="small">resilient routing</text>
+
+  <rect x="180" y="280" width="640" height="64" class="layer" fill="#f0fdf4"/>
+  <text x="210" y="306" class="label">3. CDN Edge</text>
+  <text x="210" y="329" class="small">cache and TLS termination</text>
+
+  <rect x="210" y="360" width="580" height="64" class="layer" fill="#dcfce7"/>
+  <text x="240" y="386" class="label">4. WAF / Bot Management</text>
+  <text x="240" y="409" class="small">block, challenge, inspect</text>
+
+  <rect x="240" y="440" width="520" height="64" class="layer" fill="#fff7ed"/>
+  <text x="270" y="466" class="label">5. Rate Limiting</text>
+  <text x="270" y="489" class="small">control request cost</text>
+
+  <rect x="270" y="520" width="460" height="64" class="layer" fill="#ffedd5"/>
+  <text x="300" y="546" class="label">6. Application Backpressure</text>
+  <text x="300" y="569" class="small">autoscale and degrade safely</text>
+
+  <rect x="300" y="600" width="400" height="64" class="layer" fill="#f5f3ff"/>
+  <text x="330" y="626" class="label">7. Data Tier Protection</text>
+  <text x="330" y="649" class="small">queues, cache, pool limits</text>
+
+  <rect x="70" y="672" width="860" height="32" fill="#ffffff" stroke="#334155" stroke-width="2" rx="10"/>
+  <text x="500" y="694" text-anchor="middle" class="small">Logging, metrics, tracing, and incident response wrap every layer.</text>
+</svg>
