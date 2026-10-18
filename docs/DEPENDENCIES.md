@@ -26,3 +26,7 @@ Primary references checked:
   [redis image](https://github.com/docker-library/official-images/blob/master/library/redis).
 
 No permanent vulnerability-free/support guarantee is made. Review new advisories before deployment.
+
+The optional figure generator uses Matplotlib 3.10.7, verified in the official
+[PyPI release metadata](https://pypi.org/pypi/matplotlib/3.10.7/json), pinned in
+experiments/requirements.txt. Plotting dependencies are not application dependencies.

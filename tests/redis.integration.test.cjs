@@ -5,9 +5,7 @@ test(
   "real Redis: Lua concurrency, TTL repair, shared apps, expiry and readiness",
   { timeout: 20000 },
   async (t) => {
-    const url = process.env.REDIS_TEST_URL ?? "redis://127.0.0.1:16379";
-    if (!["127.0.0.1", "[::1]"].includes(new URL(url).hostname))
-      throw new Error("Only loopback Redis allowed");
+    const url = "redis://127.0.0.1:16379";
     const { createLimiter } =
       await import("../examples/redis/node-redis-example.js");
     const { createApp } = await import("../examples/redis/server.js");

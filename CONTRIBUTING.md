@@ -22,3 +22,8 @@ See [license status](docs/LICENSE-STATUS.md). No project license has been select
 do not submit copied third-party code/art without provenance and permission. The owner
 must choose a license after verifying rights; contributors must not guess ownership.
 PRs should state the problem, implemented behavior, test commands/results and limitations.
+
+For matched comparison changes run the protocol in experiments/README.md. Never edit
+recorded request/latency values to fit expected counts. Preserve source/CI provenance,
+separate warm-up from measured rows, and regenerate summaries/figures from raw data.
+CI correctness checks must not depend on submillisecond latency thresholds.

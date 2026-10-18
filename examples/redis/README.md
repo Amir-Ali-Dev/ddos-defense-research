@@ -31,4 +31,12 @@ The [NestJS example](../nestjs/README.md) uses different Reset semantics supplie
 No real authentication is implemented. Apply user/key budgets only after verifying
 credentials and retain an IP guard before authentication. Trust rules and IPv6 /64
 aggregation: [operations](../../docs/OPERATIONS.md). Test commands and limits:
-[root README](../../README.md#tests-and-validation).
+[running guide](../../docs/RUNNING.md#tests-and-validation).
+
+The matched [memory/Redis comparison](../../experiments/README.md) uses this exact
+Express app with the same fixed-window contract. Memory storage is process-local,
+bounded to 4096 live identities and swept on access; it is not a shared substitute.
+Redis `close()` is terminal. Pending/stale commands cannot reopen a closed limiter
+or reset a newer connection generation. Only a current-generation command timeout
+resets the socket; Redis command errors such as WRONGTYPE do not. Lua validates
+window 1–60000 ms and budget 1–1000 before mutation, including oversized/non-finite inputs.
