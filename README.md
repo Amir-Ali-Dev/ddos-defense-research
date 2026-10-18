@@ -4,10 +4,6 @@
   <img src="assets/hero.svg" alt="DDoS Defense Research banner" width="100%">
 </p>
 
-![Scope](https://img.shields.io/badge/Scope-Defensive%20Security-2ea44f)
-![Format](https://img.shields.io/badge/Format-GitHub%20Ready-24292f)
-![Language](https://img.shields.io/badge/Language-English%20%2F%20Persian-1f6feb)
-![Examples](https://img.shields.io/badge/Examples-Nginx%20%7C%20NestJS%20%7C%20Redis%20%7C%20Cloudflare-0f766e)
 
 > A practical, defensive research repository about Distributed Denial of Service
 > attacks: how they work at a high level, how to detect them, and how to design
@@ -42,249 +38,119 @@ Persian version: [README.fa.md](README.fa.md)
   <img src="assets/icons/cloudflare.svg" alt="Cloudflare icon" width="56">
 </p>
 
-## What This Repository Is
 
-This repository is a defensive security reference. It contains architecture
-notes, detection checklists, diagrams, case studies, and implementation examples
-for DDoS mitigation.
+## Educational v1.0 candidate
 
-It is not an attack toolkit. There are no traffic generators, exploit scripts,
-botnet instructions, or step-by-step offensive procedures here.
+A bilingual defensive reference with runnable local Nginx, NestJS and Redis examples.
+This branch prepares v1.0; no release has been published. See [validation](docs/VALIDATION.md).
 
-## Portfolio Value
-
-| Repository state | Resume value | This repository |
+| Component | Implemented | Boundary |
 |---|---|---|
-| Text-only README | Medium | Covered by the Persian and English articles |
-| README + diagrams | Good | Three SVG diagrams plus diagram documentation |
-| README + diagrams + real configs | Very good | Nginx, Cloudflare, NestJS, and Redis examples |
-| Everything above + safe local lab | Excellent | Docker-based defensive lab under `lab/` |
+| Nginx | Per-IP leaky bucket, stricter login, 429 | Local edge only; no CDN or bandwidth scrubbing |
+| NestJS | Per-route request counts, explicit proxy trust, IPv6 /64 identity | In-memory state belongs to one process |
+| Redis + Express | Atomic shared fixed windows, TTL, timeout, error policies | Two replicas share Redis; no authentication service |
+| Route cost metadata | Conceptual, unregistered middleware | Does not debit weighted budgets |
+| Cloudflare | Reviewed rule templates | Not deployed or account-tested; plan dependent |
 
-## GitHub Repository Metadata
+Application limits reduce application work. They cannot stop saturation of your internet link;
+that requires upstream ISP, CDN or scrubbing capacity. This lab does not reproduce DDoS traffic.
 
-GitHub repository metadata is edited from the repository page, not from a normal
-Markdown file. Use these values in the right-side **About** panel:
+## Quick start
 
-- Description: `Defensive research and practical examples for DDoS detection, mitigation, and resilient web architecture.`
-- Website: `https://github.com/Amir-Ali-Dev/ddos-defense-research`
-- Topics: `ddos`, `cybersecurity`, `defensive-security`, `nginx`, `nestjs`, `redis`, `cloudflare`, `web-security`
-- Social preview image: [assets/social-preview.png](assets/social-preview.png)
+Prerequisites: Git, Docker Engine/Desktop with Linux containers, Docker Compose v2.24+
+and available ports 8080, 3000, 3001, 3002. Allow roughly 1 GB memory and network access
+to official images/npm for the first build. No keys, passwords or paid services are required.
+Node.js 24.22.0 + npm are needed for host-side tests; containers include Node for the apps.
 
-Setup notes are also tracked in [.github/REPOSITORY_SETUP.md](.github/REPOSITORY_SETUP.md).
 
-## Repository Map
+~~~sh
+git clone https://github.com/Amir-Ali-Dev/ddos-defense-research.git
+cd ddos-defense-research
+# Before merge, check out the PR branch: git checkout prepare-educational-v1
+docker compose -f lab/docker-compose.yml --profile all up -d --build --wait --wait-timeout 120
+curl -i http://127.0.0.1:8080/api/status
+curl -i http://127.0.0.1:3000/api/status
+curl -i http://127.0.0.1:3001/api/status
+~~~
 
-```text
-ddos-defense-research
-|
-|-- README.md
-|-- README.fa.md
-|-- assets
-|   |-- hero.svg
-|   |-- social-preview.svg
-|   |-- cards
-|   `-- icons
-|-- diagrams
-|   |-- ddos-resilient-architecture.svg
-|   |-- detection-and-response-flow.svg
-|   |-- mitigation-layers.svg
-|   `-- defensive-controls.svg
-|-- examples
-|   |-- nginx
-|   |-- nestjs
-|   |-- redis
-|   `-- cloudflare
-|-- lab
-|   |-- docker-compose.yml
-|   `-- nginx.conf
-|-- case-studies
-|-- .github
-|-- SECURITY.md
-|-- CONTRIBUTING.md
-`-- references
-```
+Expected: HTTP 200 and JSON with `ok: true`. POST `/auth/login` returns 200 (Nginx/Redis)
+or 201 (NestJS); it demonstrates a stricter budget and performs **no login/authentication**.
+After the documented budget is exhausted, expect 429 and integer `Retry-After` seconds.
+The tests exercise this with small bounded request counts. All published ports bind
+to **127.0.0.1**. Redis and the Nginx backend have no host ports.
 
-## Executive Summary
+| Profile | Services / local URLs | Demo limits |
+|---|---|---|
+| `nginx` | edge :8080 → backend | Public 2 r/s + burst 2; login 1 r/s + burst 1 |
+| `nestjs` | NestJS :3000 | Public 6 / 2 s; login 2 / 2 s |
+| `redis` | app A :3001, app B :3002 → Redis | Shared public 6 / 2 s; shared login 2 / 2 s |
+| `all` | All of the above | Independent Nginx, NestJS and Redis scenarios |
 
-DDoS is an availability problem before it is a tooling problem. A large attack
-can exhaust bandwidth, packet processing capacity, connection tables, TLS
-handshake capacity, application workers, queues, caches, databases, or a single
-expensive endpoint.
+Run one profile by replacing `all` in the command. A Nginx burst is extra capacity
+beyond the first request; it drains continuously, unlike the Redis fixed window.
+NestJS throttler blocks for its TTL starting when the budget is exceeded; Redis's
+window is anchored to the first request and rejected requests do not extend it.
 
-Mature defense is layered:
+## Tests and validation
 
-1. Absorb hostile traffic at the edge before it reaches the origin.
-2. Reduce the cost of each request with caching, rate limits, queues, and
-   graceful degradation.
-3. Detect abnormal behavior quickly with baselines, metrics, logs, and clear
-   incident runbooks.
+Run from the repository root, before starting smoke tests on a fresh lab:
 
-## Architecture At A Glance
+~~~sh
+npm ci
+npm run build
+npm test
+npm run check
+docker compose -f lab/docker-compose.yml --profile all config -q
+docker compose -f lab/docker-compose.yml --profile all exec -T edge nginx -t
+npm run test:lab
+~~~
 
-![DDoS-resilient architecture](diagrams/ddos-resilient-architecture.svg)
 
-The most important architectural rule is simple: do not let the public internet
-talk directly to your origin unless that is an explicit and controlled design
-choice. For most web systems, origin traffic should pass through DNS, CDN, WAF,
-rate limiting, and load balancing layers first.
 
-More diagrams:
 
-- [Visual asset gallery](assets/README.md)
-- [DDoS-resilient traffic path](diagrams/ddos-resilient-architecture.svg)
-- [Detection and response flow](diagrams/detection-and-response-flow.svg)
-- [Mitigation layers](diagrams/mitigation-layers.svg)
-- [Defensive controls: rate limits, cache, autoscaling, logging](diagrams/defensive-controls.svg)
+Smoke tests accept only fixed loopback URLs, make fewer than 100 requests sequentially,
+and stop/restart the lab Redis service to verify fail-closed behavior. Do not run them
+against a lab with data you need: this Redis is ephemeral and has persistence disabled.
+For Lua concurrency/TTL and two-instance integration tests, temporarily expose only a loopback Redis port:
 
-## DDoS Attack Types, Theoretical View
+~~~sh
+docker compose -f lab/docker-compose.yml -f lab/compose.test.yml --profile redis up -d --build --wait
+npm run test:redis
+docker compose -f lab/docker-compose.yml -f lab/compose.test.yml --profile all down -v --remove-orphans
+~~~
 
-| Category | Target | Typical pressure point | Defensive focus |
-|---|---|---|---|
-| Volumetric | Network capacity | Bandwidth, packets per second, upstream links | Anycast, CDN, scrubbing, ISP filtering |
-| Protocol / state exhaustion | Network and transport state | TCP backlog, connection tables, TLS CPU | SYN protection, connection limits, TLS offload |
-| Application layer | Web/API logic | RPS, workers, database, cache misses | WAF, bot management, rate limits, caching |
-| Multi-vector | Several layers at once | Network, edge, app, data tier | Layered defense and incident coordination |
-| Ransom DDoS | Business continuity | Availability, trust, operational pressure | Prepared runbooks, provider escalation, evidence handling |
 
-## Detection
+The integration test uses `redis://127.0.0.1:16379` by default; it fails rather than silently
+skipping when Redis is absent. HTTP policy tests inject a failed dependency; they do
+not replace the real Redis integration or outage smoke test. [CI](.github/workflows/ci.yml)
+builds, tests, validates configurations/links and cleans up even after failures.
+No badge implies a CI pass; actual results are recorded in the PR and [validation report](docs/VALIDATION.md).
 
-Good detection starts with a baseline. If normal traffic is unknown, abnormal
-traffic becomes a guess.
+## Shutdown and troubleshooting
 
-![Detection and response flow](diagrams/detection-and-response-flow.svg)
+~~~sh
+docker compose -f lab/docker-compose.yml --profile all logs --tail 80
+docker compose -f lab/docker-compose.yml --profile all ps
+docker compose -f lab/docker-compose.yml --profile all down -v --remove-orphans
+~~~
 
-### Signals Worth Monitoring
 
-| Layer | Signals |
-|---|---|
-| Network | bps, pps, dropped packets, upstream saturation |
-| TCP/UDP | SYN rate, active connections, reset rate, connection lifetime |
-| TLS | handshake rate, failed handshakes, edge CPU |
-| HTTP | RPS, status codes, path distribution, p95/p99 latency |
-| CDN/cache | cache hit ratio, origin fetches, cache-bypass patterns |
-| WAF | allowed, challenged, blocked, false positive rate |
-| Application | CPU, memory, thread pool, queue depth, worker saturation |
-| Database | connection pool usage, slow queries, lock waits |
+If a port is occupied, stop the conflicting service or change the loopback host port
+and update the fixed smoke-test URL. On Windows, enable Linux containers in Docker Desktop.
+If image/npm downloads fail, check registry connectivity and retry the build; do not
+disable TLS verification. For 503, inspect Redis readiness and logs; 429 is an exhausted
+budget, not a Redis failure. Wait at least 3 seconds before manually retrying lab limits.
+Health probes are exempt from rate limits; `/readyz` on Redis apps reports 503 during an outage.
 
-### Behavioral Indicators
+## Operational guidance and reference
 
-- Sudden traffic growth without a matching business event.
-- Unusual concentration on login, search, report, checkout, or upload routes.
-- Lower cache hit ratio with a sharp increase in origin requests.
-- High 4xx/5xx rates, timeout growth, or load balancer errors.
-- Many requests without valid sessions, normal navigation flow, or stable
-  browser fingerprints.
-- Suspicious ASN, country, IP reputation, user-agent, or JA3/JA4 distribution.
+- [Proxy trust and failure policies](docs/OPERATIONS.md): IP extraction, IPv6, headers, timeouts and runbook.
+- [Defensive background](docs/reference.en.md) · [Persian article and instructions](README.fa.md).
+- [Nginx](examples/nginx/README.md) · [NestJS](examples/nestjs/README.md) · [Redis](examples/redis/README.md) · [Cloudflare](examples/cloudflare/README.md).
+- [Lab](lab/README.md) · [Architecture](diagrams/ddos-resilient-architecture.svg) · [Asset gallery](assets/README.md).
+- [Case studies](case-studies/README.md) · [Sources](references/README.md) · [Dependency review](docs/DEPENDENCIES.md).
+- [Security](SECURITY.md) · [Contributing](CONTRIBUTING.md) · [License status](docs/LICENSE-STATUS.md).
+- [Changelog](CHANGELOG.md) · [Draft release notes](docs/RELEASE-v1.0.md) · [About/Topics suggestions](.github/REPOSITORY_SETUP.md).
 
-## Mitigation Layers
-
-![Mitigation layers](diagrams/mitigation-layers.svg)
-
-| Layer | Defensive purpose |
-|---|---|
-| ISP / scrubbing provider | Absorb traffic that would saturate your network link |
-| DNS / Anycast | Avoid DNS as a single point of failure |
-| CDN | Cache public content and terminate traffic near users |
-| WAF / bot management | Challenge or block suspicious application traffic |
-| Rate limiting | Control request rate and request cost |
-| Load balancer / gateway | Enforce connection limits and route traffic safely |
-| Application | Apply backpressure, degrade gracefully, protect expensive paths |
-| Data tier | Protect database and cache from direct request amplification |
-| Observability / incident response | Detect, coordinate, tune, and learn after the event |
-
-## Practical Examples
-
-The examples are intentionally defensive and production-oriented:
-
-- [Nginx rate limiting](examples/nginx/README.md): edge-side request and
-  connection controls.
-- [NestJS rate limiting](examples/nestjs/README.md): API throttling with
-  route-level sensitivity.
-- [Redis-based rate limiter](examples/redis/README.md): shared limiter state
-  for multi-instance applications.
-- [Cloudflare WAF and rate limit rules](examples/cloudflare/README.md): edge
-  rules for login, admin, API, and suspicious traffic.
-- [Defensive lab](lab/README.md): a safe local layout for studying mitigation
-  configuration without targeting any public system.
-
-### Safe Local Demo
-
-The lab can be started locally with Docker:
-
-```bash
-cd lab
-docker compose up
-```
-
-Then open `http://localhost:8080` and inspect how Nginx applies defensive edge
-limits before traffic reaches the demo service. The lab is intentionally scoped
-to local configuration study.
-
-## Defensive Design Principles
-
-| Principle | Why it matters |
-|---|---|
-| Origin isolation | Attackers should not bypass CDN/WAF and reach the server directly |
-| Cache-first public paths | Static and public content should not consume origin capacity |
-| Endpoint-aware limits | Login, export, search, and upload routes need stricter controls |
-| Cost-based thinking | A cheap request and an expensive report should not have equal weight |
-| Backpressure | The system should slow down predictably instead of collapsing suddenly |
-| Graceful degradation | Non-critical features can be reduced to preserve core availability |
-| Provider escalation | Large volumetric attacks often require upstream help |
-| Post-incident learning | Temporary rules must be reviewed, removed, or made permanent carefully |
-
-## Historical Case Studies
-
-Detailed notes live in [case-studies](case-studies/README.md).
-
-| Case | Why it matters |
-|---|---|
-| Estonia 2007 | DDoS as a national resilience and coordination problem |
-| Spamhaus 2013 | Amplification and open resolver abuse became globally visible |
-| Mirai / Dyn 2016 | IoT botnets and DNS dependency risk entered the mainstream |
-| GitHub 2018 | A major memcached amplification attack peaked around 1.35 Tbps |
-| HTTP/2 Rapid Reset 2023 | Application-layer DDoS reached extreme request-per-second scale |
-| Hyper-volumetric attacks 2025 | Defensive capacity must evolve with rapidly growing attack scale |
-
-Recommended deep reads:
-
-- [GitHub 2018 memcached amplification](case-studies/2018-github-memcached.md)
-- [HTTP/2 Rapid Reset 2023](case-studies/2023-http2-rapid-reset.md)
-
-## Operational Checklist
-
-### Before An Incident
-
-- [ ] Inventory public IPs, DNS records, and forgotten subdomains.
-- [ ] Ensure origin servers only accept traffic from approved edge networks.
-- [ ] Put public web traffic behind CDN/WAF where appropriate.
-- [ ] Define cache policies for static and public content.
-- [ ] Add rate limits for login, registration, password reset, search, export,
-      checkout, and upload routes.
-- [ ] Monitor network, edge, application, cache, and database metrics.
-- [ ] Prepare an incident runbook with provider escalation contacts.
-- [ ] Test failover, degraded modes, and emergency WAF rules.
-
-### During An Incident
-
-- [ ] Classify the pressure point: network, protocol, TLS, HTTP, app, or data.
-- [ ] Protect the origin first.
-- [ ] Increase safe caching for public responses.
-- [ ] Apply scoped rate limits to expensive or abused endpoints.
-- [ ] Use WAF challenges for suspicious traffic instead of broad blocking when
-      false positives are likely.
-- [ ] Escalate to CDN, DDoS protection, or ISP providers when upstream capacity
-      is at risk.
-- [ ] Keep a timeline of decisions, rules, metrics, and user impact.
-
-### After An Incident
-
-- [ ] Review false positives and real-user impact.
-- [ ] Remove emergency rules that are no longer needed.
-- [ ] Convert useful temporary rules into tested permanent controls.
-- [ ] Patch architectural weaknesses exposed by the incident.
-- [ ] Update the runbook, dashboards, and alert thresholds.
-
-## References
-
-See [references/README.md](references/README.md) for the full source list.
+Fixed windows permit boundary bursts; shared NATs and IPv6 /64s share budgets.
+This is an educational configuration, not a production capacity or availability guarantee.

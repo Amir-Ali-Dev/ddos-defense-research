@@ -1,29 +1,21 @@
-# NestJS Rate Limiting Example
+# NestJS request limiting
 
-This example demonstrates API-side throttling with `@nestjs/throttler`.
+From the root: `npm ci && npm run build`, then `npm start -w examples/nestjs`.
+Direct execution binds 127.0.0.1:3000. [Compose](../../lab/README.md) provides the repeatable lab.
 
-Files:
+GET /api/status: 6 requests / 10 s by default; POST /auth/login: 2 / 10 s.
+Compose sets a 2 s window. Nest returns 201 for a successful POST, 429 plus Retry-After
+for excess requests. Throttler v6 counts per handler; its block interval begins at the
+first excess request. Retry-After is the remaining block time, rounded to seconds.
+Success responses include the throttler's X-RateLimit-Limit, Remaining and Reset headers
+(Reset is seconds until the tracking window expires, not an epoch timestamp).
 
-- [package.json](package.json): minimal dependencies.
-- [src/app.module.ts](src/app.module.ts): global throttler guard.
-- [src/auth.controller.ts](src/auth.controller.ts): stricter login limit.
-- [src/route-cost.middleware.ts](src/route-cost.middleware.ts): route-cost
-  tagging middleware for defensive logging and future cost-based limits.
-- [src/proxy-aware-throttler.guard.ts](src/proxy-aware-throttler.guard.ts):
-  trusted-proxy-aware client tracking.
-- [tsconfig.json](tsconfig.json): TypeScript configuration.
+State is in memory per process, not shared among Nest replicas. Redis is a separate
+Express scenario. Health probes bypass throttling. The login route performs no authentication.
+RouteCostMiddleware is unregistered conceptual metadata and has no enforcement effect;
+the implemented limits count requests, not weighted costs.
 
-Notes:
-
-- The in-memory throttler is acceptable for a small single-instance demo.
-- For horizontally scaled services, store limiter state in Redis or another
-  shared backend.
-- Do not trust `X-Forwarded-For` unless requests come from your own reverse
-  proxy, CDN, or load balancer.
-
-Run locally:
-
-```bash
-npm install
-npm run start:dev
-```
+TRUSTED_PROXIES defaults empty/false. Only explicit comma-separated IPs/CIDRs are
+accepted; do not enable trust for the whole Docker/private network. See [operations](../../docs/OPERATIONS.md).
+Other settings: HOST, PORT, WINDOW_MS (100–60000), PUBLIC_LIMIT and LOGIN_LIMIT (1–1000).
+Invalid settings fail startup. Tests: `npm test` at the root.

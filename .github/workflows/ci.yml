@@ -1,0 +1,45 @@
+name: Educational lab checks
+on:
+  push:
+    branches: [main, prepare-educational-v1]
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: lab-checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+      - run: npm run check
+      - run: npm audit --audit-level=high
+      - name: Validate Compose and standalone Nginx configuration
+        run: |
+          docker compose -f lab/docker-compose.yml -f lab/compose.test.yml --profile all config -q
+          docker run --rm -v "$PWD/examples/nginx/rate-limit.conf:/etc/nginx/nginx.conf:ro" nginx:1.30.6-alpine nginx -t
+      - name: Start isolated local scenarios and wait for readiness
+        run: docker compose -f lab/docker-compose.yml -f lab/compose.test.yml --profile all up -d --build --wait --wait-timeout 120
+      - name: Validate running Nginx
+        run: docker compose -f lab/docker-compose.yml --profile all exec -T edge nginx -t
+      - name: Atomic Lua and shared Redis integration
+        run: npm run test:redis
+      - name: Bounded loopback smoke and actual Redis outage
+        run: npm run test:lab
+      - name: Failure diagnostics
+        if: failure()
+        run: docker compose -f lab/docker-compose.yml -f lab/compose.test.yml --profile all logs --tail 100
+      - name: Always remove lab resources
+        if: always()
+        run: docker compose -f lab/docker-compose.yml -f lab/compose.test.yml --profile all down -v --remove-orphans --timeout 10

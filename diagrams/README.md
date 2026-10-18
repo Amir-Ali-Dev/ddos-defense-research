@@ -1,12 +1,9 @@
-# Diagrams
+# Architecture and diagrams
 
-The diagrams are SVG files so GitHub can render them directly without extra
-build steps.
+- [Runnable local architecture](ddos-resilient-architecture.svg): exact Compose services/ports; original 1200 × 700 frame.
+- [Conceptual production reference](production-reference.svg): broader edge/DNS/WAF design, not deployed by the lab. DNS is name resolution, not an inline HTTP hop; its arrows indicate dependency. Cache, queue and database links are conceptual and do not specify a runnable processing chain.
+- [Detection and response](detection-and-response-flow.svg): operational decision aid.
+- [Mitigation layers](mitigation-layers.svg): defense taxonomy, not a literal sequential packet path.
+- [Defensive controls](defensive-controls.svg): conceptual controls, not implemented services.
 
-| Diagram | Purpose |
-|---|---|
-| [ddos-resilient-architecture.svg](ddos-resilient-architecture.svg) | Traffic path from users through DNS, CDN, WAF, rate limiting, load balancing, application, cache, queue, and database layers |
-| [detection-and-response-flow.svg](detection-and-response-flow.svg) | How to classify pressure and choose the right mitigation layer |
-| [mitigation-layers.svg](mitigation-layers.svg) | Stacked defense layers from upstream providers to data-tier protection |
-| [defensive-controls.svg](defensive-controls.svg) | Core controls: rate limiting, cache, autoscaling, queues, graceful degradation, logging, metrics, and runbooks |
-
+Existing visual identity and image frames are retained. See [lab instructions](../lab/README.md).

@@ -1,31 +1,19 @@
-# Security Policy
+# Security policy
 
-## Scope
+The v1.0 candidate is educational, with no production support/SLA. It contains no traffic
+generator or public-target testing. Run tests only in the local lab with documented bounds.
 
-This repository is defensive. It documents DDoS detection, mitigation,
-architecture, and safe local configuration examples.
+For a vulnerability, use the repository Security → Advisories → Report a vulnerability
+if private reporting is enabled. If unavailable, open an issue asking the maintainer to
+enable private reporting without posting exploit details, secrets, personal data or targets.
+No private email address or response-time promise is designated by this repository.
 
-Allowed contributions:
+Provide affected commit/version, file path, expected versus actual trust boundary,
+minimal loopback-only reproduction, dependency versions and a proposed mitigation.
+Report credential leaks through GitHub's private channel where available; revoke exposed
+credentials immediately. Ordinary documentation inaccuracies can be public issues.
 
-- defensive architecture notes,
-- mitigation examples,
-- monitoring and incident response guidance,
-- safe local labs,
-- case studies with defensive analysis.
-
-Not allowed:
-
-- attack scripts,
-- traffic generation tooling,
-- instructions for abusing public services,
-- botnet, reflection, or amplification procedures,
-- target lists or scanning workflows.
-
-## Reporting Issues
-
-If you find content that crosses the defensive boundary, open an issue with:
-
-- the file path,
-- why the content is risky,
-- a suggested defensive rewrite.
-
+Known boundaries: no authentication/TLS/CDN, process-local Nest state, fixed-window bursts,
+IPv6 /64 and NAT shared budgets, ephemeral single Redis with no failover, and no protection
+against bandwidth exhaustion. See [operations](docs/OPERATIONS.md) and [validation](docs/VALIDATION.md).
+Pinning versions does not eliminate future vulnerabilities; review official advisories and lockfile diffs.

@@ -1,21 +1,17 @@
-# Hyper-Volumetric DDoS Trends 2025
+# Hyper-volumetric observations in 2025
 
-## Why It Matters
+- Occurrence: 2025 Q4 (reporting interval; no single incident date claimed here).
+- Publication: 2026-02-05.
+- Primary source: [Cloudflare quarterly operator report](https://blog.cloudflare.com/ddos-threat-report-2025-q4/).
+- Reviewed: 2026-10-19.
 
-Recent public DDoS reports show continuing growth in very large, short, and
-multi-vector attacks. Designing only for historical attack sizes leaves a system
-underprepared.
+## Reported observation
 
-## Defensive Lessons
+The report describes large attacks observed during 2025 Q4. These are provider-specific observations published in 2026; this page makes no current-world-record claim or extrapolation to all networks.
 
-- Capacity planning should be refreshed as the threat landscape changes.
-- Short attacks still matter because they can damage SLA and user trust.
-- A single datacenter, single transit path, or unprotected origin is a fragile
-  design for public services.
-- Detection needs to be fast enough for attacks that peak quickly.
+## Defensive interpretation
 
-## Architecture Takeaway
+Refresh capacity planning and escalation paths from recent primary telemetry; the local rate limiter cannot reproduce or absorb these volumes.
 
-Modern DDoS resilience is a living architecture. Provider capabilities,
-baselines, rules, and runbooks should be reviewed regularly.
-
+These recommendations are repository analysis, not a quotation or a reproduction procedure.
+See the [local lab](../lab/README.md) and [runbook](../docs/OPERATIONS.md).

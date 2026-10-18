@@ -1,66 +1,17 @@
 # HTTP/2 Rapid Reset 2023
 
-## Why It Matters
+- Occurrence: Campaign began August 2023; publicly disclosed 2023-10-10.
+- Publication: 2023-10-10.
+- Primary source: [Google incident operator](https://cloud.google.com/blog/products/identity-security/google-cloud-mitigated-largest-ddos-attack-peaking-above-398-million-rps/).
+- Reviewed: 2026-10-19.
 
-The HTTP/2 Rapid Reset event showed that application-layer DDoS can reach
-extreme request-per-second scale. It also highlighted how protocol behavior,
-edge infrastructure, and fast patching all matter.
+## Reported observation
 
-Sources:
+Google reports mitigating a campaign peaking at 398 million requests/s. This is its observation scope, not a general capacity promise. Protocol processing and edge patching are central to this incident class.
 
-- [Google: How HTTP/2 Rapid Reset works](https://cloud.google.com/blog/products/identity-security/how-it-works-the-novel-http2-rapid-reset-ddos-attack)
-- [Google: Largest DDoS attack above 398 million rps](https://cloud.google.com/blog/products/identity-security/google-cloud-mitigated-largest-ddos-attack-peaking-above-398-million-rps/)
+## Defensive interpretation
 
-## What Made It Different
+Patch HTTP/2 implementations, monitor stream/reset behavior and avoid unnecessary backend work.
 
-Traditional volumetric attacks try to overwhelm network capacity. Rapid Reset
-was dangerous because it exploited application-layer and protocol-level cost
-asymmetry: the client could create work for servers and proxies at very high
-speed while avoiding the normal response path.
-
-From a defensive perspective, the important lesson is that request count alone
-is not enough. Operators also need protocol-level visibility, especially around
-connection behavior, stream creation, cancellation patterns, and backend work
-triggered by edge requests.
-
-## Defensive Analysis
-
-| Defensive question | Why it matters |
-|---|---|
-| Are HTTP/2-capable proxies patched? | Edge software is part of the security boundary |
-| Can abusive connections be closed quickly? | Blocking individual requests may be too slow |
-| Are stream resets and cancellation ratios visible? | Aggregate RPS can hide protocol abuse |
-| Does the edge shield the backend from canceled work? | Reverse proxies may pass work downstream too early |
-| Can Layer 7 mitigation happen globally? | Extreme RPS needs distributed edge capacity |
-
-## Defensive Lessons
-
-- Application-layer attacks can be massive even when bandwidth is not the only
-  bottleneck.
-- HTTP protocol implementations and proxies must be patched quickly.
-- Edge telemetry should include protocol-level signals, not only aggregate RPS.
-- WAF and CDN providers are important parts of the patch and mitigation path.
-- Some mitigations need to operate at connection level, not only request level.
-- Backend services should not be the first place that discovers protocol abuse.
-
-## Recommended Defensive Controls
-
-| Control | Defensive purpose |
-|---|---|
-| Patch HTTP/2 proxies and load balancers | Fix known protocol-handling weaknesses |
-| Track per-connection behavior | Detect abnormal stream creation and cancellation |
-| Close abusive connections | Stop repeated work creation on the same connection |
-| Limit backend fan-out | Prevent edge parsing from becoming backend load |
-| Use CDN/WAF edge capacity | Keep mitigation distributed and close to traffic source |
-| Maintain emergency protocol toggles | Allow temporary policy changes while preserving core availability |
-
-## Architecture Takeaway
-
-Layer 7 defense must be treated as a capacity and protocol-resilience problem,
-not only as a rule-matching problem.
-
-## Repository Mapping
-
-- Defensive controls diagram: [diagrams/defensive-controls.svg](../diagrams/defensive-controls.svg)
-- Cloudflare edge rules: [examples/cloudflare](../examples/cloudflare/README.md)
-- NestJS route-level throttling: [examples/nestjs](../examples/nestjs/README.md)
+These recommendations are repository analysis, not a quotation or a reproduction procedure.
+See the [local lab](../lab/README.md) and [runbook](../docs/OPERATIONS.md).

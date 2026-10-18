@@ -1,16 +1,33 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { Throttle } from '@nestjs/throttler';
+import { Controller, Get, Post } from "@nestjs/common";
+import { SkipThrottle, Throttle } from "@nestjs/throttler";
+const { integerEnv } = require("../../shared/network.cjs");
+const ttl = integerEnv("WINDOW_MS", 10000, 100, 60000);
 
-@Controller('auth')
+@Controller()
 export class AuthController {
-  @Post('login')
-  @Throttle({ default: { ttl: 60_000, limit: 5 } })
-  login(@Body() body: { email?: string }) {
+  @Get("healthz")
+  @SkipThrottle()
+  health() {
+    return { ok: true };
+  }
+
+  @Get("api/status")
+  status() {
+    return { ok: true, service: "nestjs", storage: "process-local" };
+  }
+
+  @Post("auth/login")
+  @Throttle({
+    default: {
+      ttl,
+      limit: integerEnv("LOGIN_LIMIT", 2, 1, 1000),
+      blockDuration: ttl,
+    },
+  })
+  login() {
     return {
       ok: true,
-      message: 'Login handler placeholder',
-      subject: body.email ?? 'anonymous',
+      note: "Rate-limit demonstration; no authentication is performed",
     };
   }
 }
-

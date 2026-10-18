@@ -1,36 +1,28 @@
-# Defensive DDoS Lab
+# Repeatable local lab / آزمایشگاه محلی
 
-This lab is for studying defensive configuration locally. It does not include
-traffic generation tools and should not be used against any public system.
+See the complete [English quick start](../README.md#quick-start) and [Persian instructions](../README.fa.md).
+Run all commands from the repository root. Select `nginx`, `nestjs`, `redis`, or `all`:
 
-Files:
+~~~sh
+docker compose -f lab/docker-compose.yml --profile all up -d --build --wait --wait-timeout 120
+docker compose -f lab/docker-compose.yml --profile all exec -T edge nginx -t
+npm ci
+npm run build
+npm run test:lab
+docker compose -f lab/docker-compose.yml --profile all down -v --remove-orphans
+~~~
 
-- [docker-compose.yml](docker-compose.yml): Nginx edge container plus a simple
-  local demo service.
-- [nginx.conf](nginx.conf): local defensive limits and logging.
+The smoke test stops/restarts the ephemeral Redis. It is a bounded functional test,
+not a load/attack tool. No target URL option is accepted. It uses fewer than 100
+sequential HTTP requests and 2-second request deadlines, plus bounded readiness waits.
+The CI job has a 15-minute hard deadline and always removes containers/volumes.
 
-Run:
+Node apps run as non-root with a read-only filesystem, dropped capabilities and
+resource limits. Nginx and Redis use their official image defaults. The network is
+a private Docker bridge; host ports are loopback only, not a production ingress.
+Containers can reach the internet; this is not a sandbox for running untrusted code.
+There is no TLS, authentication, CDN, bot management, scrubbing, queue, or database here.
 
-```bash
-docker compose up
-```
-
-Open:
-
-```text
-http://localhost:8080
-```
-
-Suggested study flow:
-
-1. Review the Nginx zones and route-specific limits.
-2. Observe how normal browser requests are proxied.
-3. Tune limits for different route sensitivity.
-4. Compare edge-side limiting with application-side limiting in
-   [examples/nestjs](../examples/nestjs/README.md).
-
-Safety boundary:
-
-- Keep the lab local.
-- Do not aim traffic at public systems.
-- Use the lab to review configuration, logs, and defensive behavior.
+Redis apps use liveness /healthz and readiness /readyz; Compose waits for readiness.
+Restarting the apps loses NestJS state; restarting Redis loses shared budgets.
+Use [compose.test.yml](compose.test.yml) only for host-side Lua integration tests.

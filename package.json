@@ -1,0 +1,26 @@
+{
+  "name": "ddos-defense-research",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "workspaces": [
+    "examples/nestjs",
+    "examples/redis"
+  ],
+  "scripts": {
+    "build": "npm run build -w examples/nestjs",
+    "test": "node --test --test-concurrency=1 tests/network.test.cjs tests/nest.test.cjs tests/redis-policy.test.cjs",
+    "test:redis": "node --test --test-concurrency=1 tests/redis.integration.test.cjs",
+    "test:lab": "node tests/lab-smoke.cjs",
+    "check": "node scripts/check-repository.cjs"
+  },
+  "dependencies": {
+    "ipaddr.js": "2.5.0",
+    "proxy-addr": "2.0.8"
+  },
+  "devDependencies": {
+    "yaml": "2.9.1"
+  }
+}

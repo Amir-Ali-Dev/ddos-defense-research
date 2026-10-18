@@ -14,6 +14,81 @@
 
 > این مقاله با نگاه دفاعی، آموزشی و معماری نوشته شده است. هدف آن کمک به شناخت، تشخیص، کاهش اثر و طراحی سامانه‌های مقاوم در برابر حملات DDoS است؛ نه آموزش اجرای حمله.
 
+
+## اجرای نسخه آموزشی v1.0 (نامزد انتشار)
+
+این شاخه آماده‌سازی نسخه است؛ release منتشر نشده است. راهنمای اجرای انگلیسی: [README.md](README.md).
+نتیجهٔ واقعی بررسی‌ها و تست‌های اجرا‌نشده: [گزارش اعتبارسنجی](docs/VALIDATION.md).
+
+| بخش | قابلیت قابل اجرا | محدودیت |
+|---|---|---|
+| Nginx | محدودسازی IP و مسیر ورود، پاسخ 429 | فقط لبهٔ محلی، بدون CDN و پاک‌سازی پهنای باند |
+| NestJS | شمارش درخواست هر مسیر و اعتماد صریح به پراکسی | شمارنده فقط در حافظهٔ یک پردازش |
+| Redis و Express | پنجرهٔ ثابت اتمیک، TTL و دو نمونه با شمارندهٔ مشترک | احراز هویت واقعی ندارد |
+| متادیتای هزینهٔ مسیر | مثال مفهومی و غیرفعال | محدودسازی وزن‌دار پیاده‌سازی نشده |
+| Cloudflare | قالب مستند و بازبینی‌شده | اجرا نشده، وابسته به امکانات پلن |
+
+پیش‌نیاز: Git، Docker با کانتینر لینوکسی و Compose نسخهٔ 2.24 یا بالاتر، حدود ۱ گیگابایت حافظه و پورت‌های آزاد 8080، 3000، 3001 و 3002.
+برای نخستین build اینترنت لازم است؛ کلید، رمز و سرویس پولی لازم نیست. تست‌های میزبان به Node.js 24.22.0 و npm نیاز دارند.
+
+~~~sh
+git clone https://github.com/Amir-Ali-Dev/ddos-defense-research.git
+cd ddos-defense-research
+# Before merge: git checkout prepare-educational-v1
+docker compose -f lab/docker-compose.yml --profile all up -d --build --wait --wait-timeout 120
+curl -i http://127.0.0.1:8080/api/status
+curl -i http://127.0.0.1:3000/api/status
+curl -i http://127.0.0.1:3001/api/status
+~~~
+
+خروجی مورد انتظار HTTP 200 و JSON با ok=true است. مسیر POST /auth/login در NestJS پاسخ 201 و در دو مثال دیگر 200 می‌دهد؛ این مسیر صرفاً نمایش محدودسازی است و کاربر را وارد نمی‌کند.
+پس از عبور از سقف، پاسخ 429 و Retry-After به ثانیه دریافت می‌شود. همهٔ پورت‌های منتشرشده فقط روی 127.0.0.1 هستند؛ Redis و backend پورت میزبان ندارند.
+
+پروفایل nginx فقط edge و backend، پروفایل nestjs فقط NestJS و پروفایل redis دو برنامه و Redis را اجرا می‌کند؛ all همه را بالا می‌آورد.
+در آزمایشگاه، NestJS و Redis برای مسیر عمومی ۶ درخواست و ورود ۲ درخواست در ۲ ثانیه مجاز می‌کنند.
+Nginx برای مسیر عمومی ۲ درخواست در ثانیه با burst=2 و برای ورود ۱ درخواست در ثانیه با burst=1 دارد.
+burst ظرفیت اضافه است؛ الگوریتم Nginx با پنجرهٔ ثابت Redis تفاوت دارد.
+در NestJS زمان مسدودی از درخواست ردشده شروع می‌شود؛ در Redis پنجره از اولین درخواست شروع می‌شود و رد شدن آن را تمدید نمی‌کند.
+
+### تست، توقف و عیب‌یابی
+
+از ریشهٔ مخزن:
+
+~~~sh
+npm ci
+npm run build
+npm test
+npm run check
+docker compose -f lab/docker-compose.yml --profile all config -q
+docker compose -f lab/docker-compose.yml --profile all exec -T edge nginx -t
+npm run test:lab
+docker compose -f lab/docker-compose.yml --profile all logs --tail 80
+docker compose -f lab/docker-compose.yml --profile all down -v --remove-orphans
+~~~
+
+تست smoke کمتر از ۱۰۰ درخواست ترتیبی به آدرس‌های ثابت loopback می‌فرستد و Redis آزمایشگاه را واقعاً متوقف و دوباره اجرا می‌کند. داده‌های این Redis موقتی است و نگه‌داری نمی‌شود.
+تست مستقل اتمیک بودن Lua و شمارندهٔ مشترک:
+
+~~~sh
+docker compose -f lab/docker-compose.yml -f lab/compose.test.yml --profile redis up -d --build --wait
+npm run test:redis
+docker compose -f lab/docker-compose.yml -f lab/compose.test.yml --profile all down -v --remove-orphans
+~~~
+
+این override فقط پورت آزمایشی Redis را روی 127.0.0.1:16379 منتشر می‌کند؛ نبود Redis باعث شکست تست می‌شود، نه skip.
+تست سیاست خطا با وابستگی شبیه‌سازی‌شده از تست Redis واقعی جداست.
+اگر پورت اشغال است سرویس مزاحم را متوقف کنید؛ تغییر پورت نیازمند هماهنگی URL ثابت تست است.
+در Windows حالت Linux containers لازم است. خطای 503 نشانهٔ آماده نبودن Redis یا پایان مهلت انتظار است؛ 429 نشانهٔ مصرف سهمیه است.
+برای تکرار دستی دست‌کم ۳ ثانیه صبر کنید. در خطای دانلود، اتصال registry را بررسی کنید و TLS را غیرفعال نکنید.
+
+پیش‌فرض اعتماد به پراکسی خاموش است؛ هدر API key یا IP دلخواه هویت معتبر نیست.
+سیاست Redis به‌صورت پیش‌فرض fail-closed با پاسخ 503 است؛ fail-open فقط با انتخاب صریح فعال می‌شود.
+مهلت اتصال و هر فرمان پیش‌فرض ۵۰۰ میلی‌ثانیه است؛ /healthz زنده بودن و /readyz آمادگی Redis را نشان می‌دهد.
+[راهنمای عملیاتی و runbook](docs/OPERATIONS.md)، [وابستگی‌ها](docs/DEPENDENCIES.md)، [مجوز](docs/LICENSE-STATUS.md)، [تغییرات](CHANGELOG.md) و [یادداشت پیش‌نویس انتشار](docs/RELEASE-v1.0.md) را ببینید.
+محدودسازی کاربردی مانع اشباع لینک اینترنت نمی‌شود؛ این بخش نیازمند ISP، CDN یا سرویس پاک‌سازی بالادستی است.
+پنجرهٔ ثابت امکان burst در مرز پنجره دارد؛ کاربران پشت NAT یا در یک IPv6 /64 سهمیهٔ مشترک دارند.
+مقالهٔ زیر زمینهٔ نظری است؛ CDN، WAF، صف و چندمنطقه‌ای بودن در آزمایشگاه پیاده‌سازی نشده‌اند.
+
 ## فهرست مطالب
 
 - [خلاصه مدیریتی](#خلاصه-مدیریتی)
