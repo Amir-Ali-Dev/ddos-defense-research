@@ -28,6 +28,29 @@ test(
     );
     for (let i = 0; i < 50 && !b.ready; i++) await sleep(100);
     assert.equal(b.ready, true);
+    const { readFile } = require("node:fs/promises");
+    const script = await readFile(
+      require("node:path").join(
+        __dirname,
+        "../examples/redis/fixed-window.lua",
+      ),
+      "utf8",
+    );
+    const invalidKey = prefix + ":invalid";
+    for (const args of [
+      ["1e309", "4"],
+      ["1000", "1001"],
+      ["1.5", "4"],
+    ]) {
+      await assert.rejects(
+        a.client.eval(script, { keys: [invalidKey], arguments: args }),
+      );
+      assert.equal(
+        await a.client.exists(invalidKey),
+        0,
+        "invalid arguments must not leave a persistent counter",
+      );
+    }
     const input = {
       identity: "192.0.2.1",
       route: "concurrent",

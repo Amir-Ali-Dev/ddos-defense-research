@@ -12,10 +12,15 @@ export function createApp(
     loginLimit = 2,
     failurePolicy = "closed",
     trustedProxies = "",
+    labUnrestricted = false,
   } = {},
 ) {
   if (!["open", "closed"].includes(failurePolicy))
     throw new Error("REDIS_FAILURE_POLICY must be open or closed");
+  if (labUnrestricted && process.env.LOCAL_COMPARISON !== "1")
+    throw new Error(
+      "Unrestricted mode is available only to the local comparison fixture",
+    );
   const app = express();
   app.disable("x-powered-by");
   app.set("trust proxy", trustProxy(trustedProxies));
@@ -24,6 +29,7 @@ export function createApp(
     res.status(limiter.ready ? 200 : 503).json({ ready: limiter.ready }),
   );
   const limit = (route, budget) => async (req, res, next) => {
+    if (labUnrestricted) return next();
     let identity;
     try {
       identity = clientIdentity(req);

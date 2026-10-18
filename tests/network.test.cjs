@@ -47,6 +47,14 @@ test("IPv4 mapped IPv6 and IPv6 /64 are canonical identities", () => {
 });
 test("malformed identity and ambiguous trust configurations fail", () => {
   assert.throws(() => clientIdentity({ ip: "not-an-ip" }));
-  for (const value of ["true", "1", "loopback", ",", "10.0.0.0/99"])
+  for (const value of [
+    "true",
+    "1",
+    "loopback",
+    ",",
+    "10.0.0.0/99",
+    "10.0.0.0/24junk",
+    "10.0.0.0/24/8",
+  ])
     assert.throws(() => trustProxy(value));
 });

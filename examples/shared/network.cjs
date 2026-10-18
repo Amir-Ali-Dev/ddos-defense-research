@@ -18,6 +18,7 @@ function trustProxy(value = "") {
 }
 function validCidr(value) {
   try {
+    if (!/^[^/]+\/[0-9]+$/.test(value)) return false;
     const [address] = value.split("/");
     if (!isIP(address)) return false;
     ipaddr.parseCIDR(value);

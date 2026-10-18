@@ -17,7 +17,7 @@ test(
           ...process.env,
           PORT: String(p),
           HOST: "127.0.0.1",
-          WINDOW_MS: "1000",
+          WINDOW_MS: "2000",
           PUBLIC_LIMIT: "6",
           LOGIN_LIMIT: "2",
           TRUSTED_PROXIES: "",
@@ -61,7 +61,7 @@ test(
       assert.equal(response.status, 429);
       retry(response);
     }
-    await sleep(1150);
+    await sleep(2150);
     assert.equal((await request(base)).status, 200);
     assert.equal(
       (await request(base, "/auth/login", { method: "POST" })).status,

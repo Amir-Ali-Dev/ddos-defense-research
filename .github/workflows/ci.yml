@@ -37,6 +37,20 @@ jobs:
         run: npm run test:redis
       - name: Bounded loopback smoke and actual Redis outage
         run: npm run test:lab
+      - name: Three bounded matched-backend comparison repetitions
+        run: npm run experiment:run
+      - name: Plot measured results (no latency pass/fail threshold)
+        run: |
+          python -m pip install -r experiments/requirements.txt
+          python experiments/plot.py
+      - name: Preserve actual experiment data and figures
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: bounded-comparison-${{ github.run_id }}-${{ github.run_attempt }}
+          path: experiments/results/latest/
+          if-no-files-found: warn
+          retention-days: 14
       - name: Failure diagnostics
         if: failure()
         run: docker compose -f lab/docker-compose.yml -f lab/compose.test.yml --profile all logs --tail 100

@@ -11,10 +11,12 @@
   ],
   "scripts": {
     "build": "npm run build -w examples/nestjs",
-    "test": "node --test --test-concurrency=1 tests/network.test.cjs tests/nest.test.cjs tests/redis-policy.test.cjs",
+    "test": "node --test --test-concurrency=1 tests/network.test.cjs tests/nest.test.cjs tests/redis-policy.test.cjs tests/limiter-regression.test.cjs tests/proxy-http.test.cjs",
     "test:redis": "node --test --test-concurrency=1 tests/redis.integration.test.cjs",
     "test:lab": "node tests/lab-smoke.cjs",
-    "check": "node scripts/check-repository.cjs"
+    "check": "node scripts/check-repository.cjs",
+    "experiment:run": "node experiments/run.cjs && node experiments/summarize.cjs",
+    "experiment:summary": "node experiments/summarize.cjs"
   },
   "dependencies": {
     "ipaddr.js": "2.5.0",

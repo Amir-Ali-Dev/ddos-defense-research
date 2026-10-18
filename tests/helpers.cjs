@@ -19,14 +19,18 @@ async function request(base, path = "/api/status", options = {}) {
   await response.arrayBuffer();
   return response;
 }
-async function ready(base, path = "/healthz", attempts = 60) {
-  for (let i = 0; i < attempts; i++) {
+async function ready(base, path = "/healthz", attempts = 80) {
+  let last = "no response";
+  const deadline = Date.now() + attempts * 100;
+  for (let i = 0; i < attempts && Date.now() < deadline; i++) {
     try {
-      if ((await request(base, path)).ok) return;
-    } catch {}
+      const response = await request(base, path);
+      if (response.ok) return;
+      last = "HTTP " + response.status;
+    } catch (error) { last = error.message + ": " + (error.cause?.message ?? ""); }
     await sleep(100);
   }
-  throw new Error("Readiness deadline exceeded: " + base + path);
+  throw new Error("Readiness deadline exceeded: " + base + path + " (" + last + ")");
 }
 function retry(response) {
   const value = response.headers.get("retry-after");

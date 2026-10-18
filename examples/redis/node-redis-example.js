@@ -10,8 +10,9 @@ export function createLimiter({
   url = "redis://127.0.0.1:6379",
   timeoutMs = 500,
   prefix = "rl:v1",
+  clientFactory = createClient,
 } = {}) {
-  const client = createClient({
+  const client = clientFactory({
     url,
     disableOfflineQueue: true,
     commandsQueueMaxLength: 128,
@@ -22,7 +23,10 @@ export function createLimiter({
   });
   client.on("error", () => {}); // Readiness + HTTP error path report dependency state; no credentials in logs.
   let connecting;
+  let stopped = false;
+  let generation = 0;
   const start = () => {
+    if (stopped || client.isOpen) return connecting;
     if (!connecting)
       connecting = client
         .connect()
@@ -32,6 +36,8 @@ export function createLimiter({
         });
   };
   const close = () => {
+    stopped = true;
+    generation++;
     if (client.isOpen) client.destroy();
   };
 
@@ -39,11 +45,14 @@ export function createLimiter({
     if (
       !Number.isSafeInteger(limit) ||
       limit < 1 ||
+      limit > 1000 ||
       !Number.isSafeInteger(windowMs) ||
-      windowMs < 1
+      windowMs < 1 ||
+      windowMs > 60000
     )
       throw new Error("Invalid limiter arguments");
     if (!client.isReady) throw new Error("Redis unavailable");
+    const requestGeneration = generation;
     const hash = createHash("sha256").update(identity).digest("hex");
     const key = prefix + ":" + route + ":" + hash;
     let timer;
@@ -80,8 +89,18 @@ export function createLimiter({
     } catch (error) {
       // A timed-out write might have committed. Never retry it for this request.
       // Destroying the socket drops queued work; reconnect in the background.
-      close();
-      start();
+      // Only the first timeout in the current connection generation may reset it.
+      // Stale commands and shutdown must never tear down/reopen a newer socket.
+      // Redis command errors (e.g. WRONGTYPE) do not require reconnecting.
+      if (
+        !stopped &&
+        requestGeneration === generation &&
+        error.message === "Redis command timed out"
+      ) {
+        generation++;
+        if (client.isOpen) client.destroy();
+        start();
+      }
       throw error;
     } finally {
       clearTimeout(timer);
